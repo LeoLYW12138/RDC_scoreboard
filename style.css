@@ -1,0 +1,6 @@
+#game-field {
+  background-image: url("./assets/gamefield.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: clamp(400px, 795px, calc(100vh - 2rem));
+}
