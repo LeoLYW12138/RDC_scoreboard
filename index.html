@@ -7,12 +7,26 @@
     <title>2021 RDC Scoreboard</title>
   </head>
   <body class="bg-gray-300 p-4">
-    <div class="flex justify-items-stretch items-stretch">
-      <header aria-label="top-bar" class=""></header>
-      <div id="game-field" class="border mx-0 md:mx-20 xl:mx-[15%] border-black flex-1 relative">
+    <div class="flex flex-col justify-items-stretch items-center">
+
+      <header aria-label="top-bar" class="flex my-2 py-1 gap-5">
+        <button class="top-bar-text text-disable pointer-events-none not-disabled:pointer-events-auto">START</button>
+        <fieldset id="countdown-timer" class="text-disable !text-shadow-none" disabled>03:00:00</fieldset>
+        <button class="top-bar-text text-disable pointer-events-none not-disabled:pointer-events-auto" disabled>STOP</button>
+      </header>
+
+      <div id="game-field" class="flex-1 mx-0 max-w-screen-lg relative md:mx-20 xl:mx-[15%]">
+        <img src="./assets/gamefield.png" alt="gamefield">
       </div>
-      <div aria-label="middle-bar" class="middle-bar"></div>
+
+      <div aria-label="middle-bar" class="flex my-2 max-w-screen-lg w-full py-1 justify-around items-center">
+        <button class="text-disable">Load from JSON</button>
+        <fieldset disabled class="text-disable font-bold text-size-lg !text-shadow-none">0:00:00</fieldset>
+        <button class="text-disable">Save as JSON</button>
+      </div>
+
       <section class="record"></section>
+
       <script type="module" src="/main.js"></script>
     </div>
   </body>

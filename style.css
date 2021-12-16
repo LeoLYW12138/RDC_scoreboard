@@ -1,6 +1,11 @@
-#game-field {
-  background-image: url("./assets/gamefield.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: clamp(400px, 795px, calc(100vh - 2rem));
+.text-disable {
+  @apply not-disabled:hover:text-shadow-sm not-disabled:text-warm-gray-700 text-blue-gray-400;
+}
+
+.top-bar-text {
+  @apply text-size-lg md:text-size-xl tracking-wider;
+}
+
+#countdown-timer {
+  @apply font-bold text-size-2xl md:text-size-3xl lg:text-size-4xl tracking-wider;
 }
