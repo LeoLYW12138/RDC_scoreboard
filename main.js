@@ -1,6 +1,17 @@
 import "./style.css";
 import "virtual:windi.css";
 
+const counters = document.querySelectorAll(".counter");
+let counter_states = {};
+
+counters.forEach((counter) => {
+  counter_states[counter.id] = 0;
+  counter.addEventListener("click", () => {
+    counter_states[counter.id]++;
+    counter.innerText = counter_states[counter.id];
+  });
+});
+
 const btn_start = document.querySelector("#start");
 const btn_stop = document.querySelector("#stop");
 const btn_reset = document.querySelector("#reset");
@@ -18,6 +29,24 @@ function msToString(ms) {
   const sec = ("0" + Math.floor((ms / 1000) % 60)).slice(-2);
   const min = ("0" + Math.floor(ms / 60 / 1000)).slice(-2);
   return `${min}:${sec}:${centisec}`;
+}
+
+function resetAll() {
+  countdown_time = THREE_MIN;
+  countup_time = 0;
+  countdownId = 0;
+  countupId = 0;
+
+  down_timer.innerText = msToString(countdown_time);
+  up_timer.innerText = msToString(countup_time);
+
+  Object.keys(counter_states).forEach((id) => {
+    counter_states[id] = 0;
+  });
+
+  counters.forEach((counter) => {
+    counter.innerText = counter_states[counter.id];
+  });
 }
 
 function countdown() {
@@ -44,7 +73,7 @@ function countup() {
   up_timer.innerText = time;
 }
 
-btn_start.addEventListener("click", function () {
+btn_start.addEventListener("click", () => {
   btn_start.disabled = true;
   btn_stop.disabled = false;
   down_timer.disabled = false;
@@ -56,7 +85,7 @@ btn_start.addEventListener("click", function () {
   countupId = setInterval(countup, 10);
 });
 
-btn_stop.addEventListener("click", function () {
+btn_stop.addEventListener("click", () => {
   btn_stop.disabled = true;
   down_timer.disabled = true;
   up_timer.disabled = true;
@@ -68,14 +97,10 @@ btn_stop.addEventListener("click", function () {
   clearInterval(countupId);
 });
 
-btn_reset.addEventListener("click", function () {
+btn_reset.addEventListener("click", () => {
   btn_start.disabled = false;
   btn_stop.classList.remove("hidden");
   btn_reset.classList.add("hidden");
 
-  countdown_time = THREE_MIN;
-  countup_time = 0;
-
-  down_timer.innerText = msToString(countdown_time);
-  up_timer.innerText = msToString(countup_time);
+  resetAll();
 });

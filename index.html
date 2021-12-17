@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2021 RDC Scoreboard</title>
   </head>
-  <body class="bg-gray-300 p-4">
+  <body class="bg-gray-300">
     <div
       class="
         flex flex-col
@@ -14,9 +14,10 @@
         items-center
         lg:container
         mx-auto
-        px-0
+        p-4
         md:px-20
         xl:px-[15%]
+        h-screen
       "
     >
       <header aria-label="top-bar" class="flex my-2 py-1 gap-5">
@@ -64,43 +65,85 @@
         </button>
       </header>
 
-      <div id="game-field" class="flex-1 relative max-w-screen-lg">
+      <div id="game-field" class="relative max-w-screen-lg">
         <img src="./assets/gamefield.png" alt="gamefield" />
         <button
-          id="red-table"
-          class="ellipse-lg top-1/2 left-1/5 bg-red-700 hover:bg-red-400"
+          id="red-plate"
+          class="
+            ellipse-lg
+            counter
+            top-1/2
+            left-[19.7%]
+            bg-red-700
+            hover:bg-red-400
+          "
           text="white size-3xl"
         >
           0
         </button>
         <button
-          id="blue-table"
-          class="ellipse-lg top-1/2 left-4/5 bg-blue-700 hover:bg-blue-400"
+          id="blue-plate"
+          class="
+            ellipse-lg
+            counter
+            top-1/2
+            left-[80.3%]
+            bg-blue-700
+            hover:bg-blue-400
+          "
           text="white size-3xl"
         >
           0
         </button>
         <button
           id="blue-pot-1"
-          class="ellipse-sm top-[38%] left-[31%] bg-cyan-300 hover:bg-cyan-400"
+          class="
+            ellipse-sm
+            counter
+            top-[38%]
+            left-[69%]
+            bg-cyan-300
+            hover:bg-cyan-400
+          "
         >
           0
         </button>
         <button
           id="blue-pot-2"
-          class="ellipse-sm top-[63%] left-[31%] bg-cyan-300 hover:bg-cyan-400"
+          class="
+            ellipse-sm
+            counter
+            top-[63%]
+            left-[69%]
+            bg-cyan-300
+            hover:bg-cyan-400
+          "
         >
           0
         </button>
         <button
           id="red-pot-1"
-          class="ellipse-sm top-[38%] left-[69%] bg-rose-300 hover:bg-rose-400"
+          class="
+            ellipse-sm
+            counter
+            top-[38%]
+            left-[31%]
+            bg-rose-300
+            hover:bg-rose-400
+          "
         >
           0
         </button>
         <button
           id="red-pot-2"
-          class="ellipse-sm top-[63%] left-[69%] bg-rose-300 hover:bg-rose-400"
+          class="
+            ellipse-sm
+            counter
+            top-[63%]
+            left-[31%]
+            bg-rose-300
+            hover:bg-rose-400
+          "
         >
           0
         </button>
@@ -108,6 +151,7 @@
           id="blue-smartcar"
           class="
             rectangle
+            counter
             top-[78.5%]
             left-[31%]
             bg-cool-gray-500
@@ -120,6 +164,7 @@
           id="red-smartcar"
           class="
             rectangle
+            counter
             top-[78.5%]
             left-[69%]
             bg-cool-gray-500
@@ -149,9 +194,12 @@
 
       <section
         aria-label="record"
-        class="w-full min-h-64 flex gap-5 text-size-sm"
+        class="w-full min-h-64 max-h-100 flex-grow flex gap-5 text-size-sm"
       >
-        <div class="flex-1 bg-cyan-300 bg-opacity-50 rounded-xl relative -z-1">
+        <div
+          id="blue-scoreboard"
+          class="flex-1 bg-cyan-300 bg-opacity-50 rounded-xl relative -z-1"
+        >
           <div
             class="
               bg-gray-400 bg-opacity-20
@@ -180,7 +228,10 @@
             <span>20 (x1)</span>
           </div>
         </div>
-        <div class="flex-1 bg-red-300 bg-opacity-50 rounded-xl relative -z-1">
+        <div
+          id="red-scoreboard"
+          class="flex-1 bg-red-300 bg-opacity-50 rounded-xl relative -z-1"
+        >
           <div
             class="
               bg-white bg-opacity-20
