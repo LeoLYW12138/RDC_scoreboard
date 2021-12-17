@@ -7,26 +7,206 @@
     <title>2021 RDC Scoreboard</title>
   </head>
   <body class="bg-gray-300 p-4">
-    <div class="flex flex-col justify-items-stretch items-center">
-
+    <div
+      class="
+        flex flex-col
+        justify-items-stretch
+        items-center
+        lg:container
+        mx-auto
+        px-0
+        md:px-20
+        xl:px-[15%]
+      "
+    >
       <header aria-label="top-bar" class="flex my-2 py-1 gap-5">
-        <button class="top-bar-text text-disable pointer-events-none not-disabled:pointer-events-auto">START</button>
-        <fieldset id="countdown-timer" class="text-disable !text-shadow-none" disabled>03:00:00</fieldset>
-        <button class="top-bar-text text-disable pointer-events-none not-disabled:pointer-events-auto" disabled>STOP</button>
+        <button
+          id="start"
+          class="
+            top-bar-text
+            text-disable
+            pointer-events-none
+            not-disabled:pointer-events-auto
+          "
+        >
+          START
+        </button>
+        <fieldset
+          id="countdown-timer"
+          class="text-disable !text-shadow-none"
+          disabled
+        >
+          03:00:00
+        </fieldset>
+        <button
+          id="stop"
+          class="
+            top-bar-text
+            text-disable
+            pointer-events-none
+            not-disabled:pointer-events-auto
+          "
+          disabled
+        >
+          STOP
+        </button>
+        <button
+          id="reset"
+          class="
+            top-bar-text
+            text-disable
+            pointer-events-none
+            not-disabled:pointer-events-auto
+            hidden
+          "
+        >
+          RESET
+        </button>
       </header>
 
-      <div id="game-field" class="flex-1 mx-0 max-w-screen-lg relative md:mx-20 xl:mx-[15%]">
-        <img src="./assets/gamefield.png" alt="gamefield">
+      <div id="game-field" class="flex-1 relative max-w-screen-lg">
+        <img src="./assets/gamefield.png" alt="gamefield" />
+        <button
+          id="red-table"
+          class="ellipse-lg top-1/2 left-1/5 bg-red-700 hover:bg-red-400"
+          text="white size-3xl"
+        >
+          0
+        </button>
+        <button
+          id="blue-table"
+          class="ellipse-lg top-1/2 left-4/5 bg-blue-700 hover:bg-blue-400"
+          text="white size-3xl"
+        >
+          0
+        </button>
+        <button
+          id="blue-pot-1"
+          class="ellipse-sm top-[38%] left-[31%] bg-cyan-300 hover:bg-cyan-400"
+        >
+          0
+        </button>
+        <button
+          id="blue-pot-2"
+          class="ellipse-sm top-[63%] left-[31%] bg-cyan-300 hover:bg-cyan-400"
+        >
+          0
+        </button>
+        <button
+          id="red-pot-1"
+          class="ellipse-sm top-[38%] left-[69%] bg-rose-300 hover:bg-rose-400"
+        >
+          0
+        </button>
+        <button
+          id="red-pot-2"
+          class="ellipse-sm top-[63%] left-[69%] bg-rose-300 hover:bg-rose-400"
+        >
+          0
+        </button>
+        <button
+          id="blue-smartcar"
+          class="
+            rectangle
+            top-[78.5%]
+            left-[31%]
+            bg-cool-gray-500
+            hover:bg-cool-gray-400
+          "
+        >
+          0
+        </button>
+        <button
+          id="red-smartcar"
+          class="
+            rectangle
+            top-[78.5%]
+            left-[69%]
+            bg-cool-gray-500
+            hover:bg-cool-gray-400
+          "
+        >
+          0
+        </button>
       </div>
 
-      <div aria-label="middle-bar" class="flex my-2 max-w-screen-lg w-full py-1 justify-around items-center">
-        <button class="text-disable">Load from JSON</button>
-        <fieldset disabled class="text-disable font-bold text-size-lg !text-shadow-none">0:00:00</fieldset>
-        <button class="text-disable">Save as JSON</button>
+      <div
+        aria-label="middle-bar"
+        class="flex my-2 w-full py-1 justify-between items-center"
+      >
+        <button class="text-disable <sm:text-size-xs ml-2">
+          Load from JSON
+        </button>
+        <fieldset
+          id="countup-timer"
+          disabled
+          class="text-disable font-bold -ml-4 md:text-size-lg !text-shadow-none"
+        >
+          00:00:00
+        </fieldset>
+        <button class="text-disable <sm:text-size-xs mr-2">Save as JSON</button>
       </div>
 
-      <section class="record"></section>
+      <section
+        aria-label="record"
+        class="w-full min-h-64 flex gap-5 text-size-sm"
+      >
+        <div class="flex-1 bg-cyan-300 bg-opacity-50 rounded-xl relative -z-1">
+          <div
+            class="
+              bg-gray-400 bg-opacity-20
+              absolute
+              top-0
+              bottom-0
+              left-2/12
+              right-4/12
+            "
+          ></div>
+          <header
+            class="
+              record
+              flex
+              py-2
+              border-2 border-transparent border-b-gray-700
+            "
+          >
+            <span>Time</span>
+            <span>Action</span>
+            <span>Total Score</span>
+          </header>
+          <div class="record flex py-2">
+            <span>0:36:27</span>
+            <span>table +1</span>
+            <span>20 (x1)</span>
+          </div>
+        </div>
+        <div class="flex-1 bg-red-300 bg-opacity-50 rounded-xl relative -z-1">
+          <div
+            class="
+              bg-white bg-opacity-20
+              absolute
+              top-0
+              bottom-0
+              left-2/12
+              right-4/12
+            "
+          ></div>
+          <header
+            class="
+              record
+              flex
+              py-2
+              border-2 border-transparent border-b-gray-700
+            "
+          >
+            <span>Time</span>
+            <span>Action</span>
+            <span>Total Score</span>
+          </header>
+        </div>
+      </section>
 
+      <script type="module" src="/score.js"></script>
       <script type="module" src="/main.js"></script>
     </div>
   </body>

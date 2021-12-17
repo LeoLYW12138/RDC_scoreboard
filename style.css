@@ -1,11 +1,42 @@
+button:focus {
+  @apply !focus:outline-none;
+}
+
 .text-disable {
   @apply not-disabled:hover:text-shadow-sm not-disabled:text-warm-gray-700 text-blue-gray-400;
 }
 
 .top-bar-text {
-  @apply text-size-lg md:text-size-xl tracking-wider;
+  @apply sm:text-size-lg md:text-size-xl tracking-wider;
 }
 
 #countdown-timer {
-  @apply font-bold text-size-2xl md:text-size-3xl lg:text-size-4xl tracking-wider;
+  @apply font-bold sm:text-size-2xl md:text-size-3xl lg:text-size-4xl tracking-wider;
+}
+
+.record span:nth-child(1) {
+  @apply w-2/12 text-center;
+}
+
+.record span:nth-child(2) {
+  @apply w-6/12 pl-4;
+}
+
+.record span:nth-child(3) {
+  @apply w-4/12 text-center;
+}
+
+.ellipse-lg {
+  @apply absolute rounded-full w-[9%] h-[18%];
+  transform: translate(-50%, -50%);
+}
+
+.ellipse-sm {
+  @apply absolute rounded-full w-[4%] h-[8%];
+  transform: translate(-50%, -50%);
+}
+
+.rectangle {
+  @apply text-white absolute rounded-xl w-[8%] h-[8%];
+  transform: translate(-50%, -50%);
 }
