@@ -1,3 +1,5 @@
+import msToString from "./utils";
+
 const blue_board = document.querySelector("#blue-scoreboard");
 const red_board = document.querySelector("#red-scoreboard");
 
@@ -13,18 +15,19 @@ class Record {
     "blue-smartcar": "smartcar",
   };
 
-  constructor(time, id, score) {
-    this.time = time;
-    this.action = object_list[id] + " +1";
-    this.score = score;
-    this.multi = multi;
+  constructor(time, id, score_info) {
+    this.time = msToString(time);
+    this.team = id.split("-").slice(0, 1);
+    this.action = Record.object_list[id] + " +1";
+    this.score = score_info.score;
+    this.multi = score_info.multi;
   }
 
-  toSpan() {
-    const span = document.createElement("span");
-    span.className = "record flex py-2";
-    span.innerHTML = `<span>${this.time}</span><span>${this.action}</span><${this.score} (x${this.multi})</span>`;
-    return span;
+  toHTML() {
+    const div = document.createElement("div");
+    div.className = "record flex py-2";
+    div.innerHTML = `<span>${this.time}</span><span>${this.action}</span><span>${this.score} (x${this.multi})</span>`;
+    return div;
   }
 }
 
@@ -42,25 +45,25 @@ function countObject(counter_states) {
     if (team == "red") {
       switch (object) {
         case "pot":
-          counts["red_pot"] += count;
+          counts.red_pot += count;
           break;
         case "plate":
-          counts["red_plate"] += count;
+          counts.red_plate += count;
           break;
         case "smartcar":
-          counts["red_smartcar"] = count;
+          counts.red_smartcar = count;
           break;
       }
     } else if (team == "blue") {
       switch (object) {
         case "pot":
-          counts["blue_pot"] += count;
+          counts.blue_pot += count;
           break;
         case "plate":
-          counts["blue_plate"] += count;
+          counts.blue_plate += count;
           break;
         case "smartcar":
-          counts["blue_smartcar"] = count;
+          counts.blue_smartcar = count;
           break;
       }
     }
@@ -85,17 +88,17 @@ function evalScore(counter_states, final = false) {
   } = countObject(counter_states);
 
   let red_score =
-    (red_pot % 2) * 200 +
-    Math.floor(red_pot / 2) * 50 +
-    (red_plate % 2) * 300 +
-    Math.floor(red_plate / 2) * 75;
+    (red_pot % 2) * 50 +
+    Math.floor(red_pot / 2) * 200 +
+    (red_plate % 2) * 75 +
+    Math.floor(red_plate / 2) * 300;
   const red_mul = 1 + red_smartcar * 0.01;
 
   let blue_score =
-    (blue_pot % 2) * 200 +
-    Math.floor(blue_pot / 2) * 50 +
-    (blue_plate % 2) * 300 +
-    Math.floor(blue_plate / 2) * 75;
+    (blue_pot % 2) * 50 +
+    Math.floor(blue_pot / 2) * 200 +
+    (blue_plate % 2) * 75 +
+    Math.floor(blue_plate / 2) * 300;
   const blue_mul = 1 + blue_smartcar * 0.01;
 
   if (final) {
@@ -103,7 +106,16 @@ function evalScore(counter_states, final = false) {
     blue_score *= blue_mul;
   }
 
-  return { red_score, red_mul, blue_score, blue_mul };
+  return {
+    red: {
+      score: red_score,
+      multi: red_mul,
+    },
+    blue: {
+      score: blue_score,
+      multi: blue_mul,
+    },
+  };
 }
 
 export { Record, evalScore };

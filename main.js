@@ -1,16 +1,10 @@
 import "./style.css";
 import "virtual:windi.css";
+import { Record, evalScore } from "./score";
+import msToString from "./utils";
 
 const counters = document.querySelectorAll(".counter");
 let counter_states = {};
-
-counters.forEach((counter) => {
-  counter_states[counter.id] = 0;
-  counter.addEventListener("click", () => {
-    counter_states[counter.id]++;
-    counter.innerText = counter_states[counter.id];
-  });
-});
 
 const btn_start = document.querySelector("#start");
 const btn_stop = document.querySelector("#stop");
@@ -18,18 +12,28 @@ const btn_reset = document.querySelector("#reset");
 const down_timer = document.querySelector("#countdown-timer");
 const up_timer = document.querySelector("#countup-timer");
 
+const score_boards = {
+  red: document.querySelector("#red-scoreboard"),
+  blue: document.querySelector("#blue-scoreboard"),
+};
+
 const THREE_MIN = 3 * 60 * 1000;
 let countdown_time = 0;
 let countup_time = 0;
 let countdownId = 0;
 let countupId = 0;
 
-function msToString(ms) {
-  const centisec = ("0" + Math.floor((ms % 1000) / 10)).slice(-2);
-  const sec = ("0" + Math.floor((ms / 1000) % 60)).slice(-2);
-  const min = ("0" + Math.floor(ms / 60 / 1000)).slice(-2);
-  return `${min}:${sec}:${centisec}`;
-}
+counters.forEach((counter) => {
+  counter_states[counter.id] = 0;
+  counter.addEventListener("click", () => {
+    counter_states[counter.id]++;
+    counter.innerText = counter_states[counter.id];
+    const score = evalScore(counter_states);
+    const team = counter.id.split("-").slice(0, 1);
+    const record = new Record(countup_time, counter.id, score[team]);
+    score_boards[team].appendChild(record.toHTML());
+  });
+});
 
 function resetAll() {
   countdown_time = THREE_MIN;
@@ -46,6 +50,10 @@ function resetAll() {
 
   counters.forEach((counter) => {
     counter.innerText = counter_states[counter.id];
+  });
+
+  document.querySelectorAll("div.record").forEach((el) => {
+    el.outerHTML = "";
   });
 }
 
@@ -75,7 +83,8 @@ function countup() {
 
 btn_start.addEventListener("click", () => {
   btn_start.disabled = true;
-  btn_stop.disabled = false;
+  btn_stop.classList.remove("hidden");
+  btn_reset.classList.add("hidden");
   down_timer.disabled = false;
   up_timer.disabled = false;
 
@@ -86,7 +95,6 @@ btn_start.addEventListener("click", () => {
 });
 
 btn_stop.addEventListener("click", () => {
-  btn_stop.disabled = true;
   down_timer.disabled = true;
   up_timer.disabled = true;
 
@@ -99,8 +107,6 @@ btn_stop.addEventListener("click", () => {
 
 btn_reset.addEventListener("click", () => {
   btn_start.disabled = false;
-  btn_stop.classList.remove("hidden");
-  btn_reset.classList.add("hidden");
 
   resetAll();
 });
