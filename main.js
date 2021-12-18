@@ -1,7 +1,7 @@
 import "./style.css";
 import "virtual:windi.css";
 import { Record, evalScore } from "./score";
-import msToString from "./utils";
+import { msToString, saveToJSON } from "./utils";
 
 const counters = document.querySelectorAll(".counter");
 let counter_states = {};
@@ -31,7 +31,7 @@ counters.forEach((counter) => {
     const score = evalScore(counter_states);
     const team = counter.id.split("-").slice(0, 1);
     const record = new Record(countup_time, counter.id, score[team]);
-    score_boards[team].appendChild(record.toHTML());
+    score_boards[team].prepend(record.toHTML());
   });
 });
 
@@ -52,9 +52,8 @@ function resetAll() {
     counter.innerText = counter_states[counter.id];
   });
 
-  document.querySelectorAll("div.record").forEach((el) => {
-    el.outerHTML = "";
-  });
+  score_boards.red.innerHTML = "";
+  score_boards.blue.innerHTML = "";
 }
 
 function countdown() {

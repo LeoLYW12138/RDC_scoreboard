@@ -14,6 +14,10 @@ button:focus {
   @apply font-bold sm:text-size-2xl md:text-size-3xl lg:text-size-4xl tracking-wider;
 }
 
+div.record {
+  @apply hover:(bg-gray-100 bg-opacity-30);
+}
+
 .record span:nth-child(1) {
   @apply w-2/12 text-center;
 }
@@ -39,4 +43,13 @@ button:focus {
 .rectangle {
   @apply text-white absolute rounded-xl w-[8%] h-[8%];
   transform: translate(-50%, -50%);
+}
+
+.scoreboard {
+  @apply overflow-scroll overflow-x-hidden absolute inset-0 top-[9.5%];
+  scrollbar-width: none;
+}
+
+.scoreboard::-webkit-scrollbar {
+  display: none;
 }

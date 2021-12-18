@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2021 RDC Scoreboard</title>
   </head>
-  <body class="bg-gray-300">
+  <body class="bg-gray-300 relative">
     <div
       class="
         flex flex-col
@@ -63,7 +63,6 @@
           RESET
         </button>
       </header>
-
       <div id="game-field" class="relative max-w-screen-lg">
         <img src="./assets/gamefield.png" alt="gamefield" />
         <button
@@ -173,7 +172,6 @@
           0
         </button>
       </div>
-
       <div
         aria-label="middle-bar"
         class="flex my-2 w-full py-1 justify-between items-center"
@@ -190,15 +188,11 @@
         </fieldset>
         <button class="text-disable <sm:text-size-xs mr-2">Save as JSON</button>
       </div>
-
       <section
         aria-label="record"
         class="w-full min-h-64 max-h-100 flex-grow flex gap-5 text-size-sm"
       >
-        <div
-          id="blue-scoreboard"
-          class="flex-1 bg-cyan-300 bg-opacity-50 rounded-xl relative -z-1"
-        >
+        <div class="flex-1 bg-cyan-300 bg-opacity-50 rounded-xl relative">
           <div
             class="
               bg-gray-400 bg-opacity-20
@@ -221,11 +215,9 @@
             <span>Action</span>
             <span>Total Score</span>
           </header>
+          <div id="blue-scoreboard" class="scoreboard"></div>
         </div>
-        <div
-          id="red-scoreboard"
-          class="flex-1 bg-red-300 bg-opacity-50 rounded-xl relative -z-1"
-        >
+        <div class="flex-1 bg-red-300 bg-opacity-50 rounded-xl relative">
           <div
             class="
               bg-white bg-opacity-20
@@ -248,11 +240,11 @@
             <span>Action</span>
             <span>Total Score</span>
           </header>
+          <div id="red-scoreboard" class="scoreboard"></div>
         </div>
       </section>
-
-      <script type="module" src="/score.js"></script>
-      <script type="module" src="/main.js"></script>
     </div>
+    <script type="module" src="/score.js"></script>
+    <script type="module" src="/main.js"></script>
   </body>
 </html>

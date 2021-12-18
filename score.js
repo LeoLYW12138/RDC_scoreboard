@@ -1,4 +1,4 @@
-import msToString from "./utils";
+import { msToString } from "./utils";
 
 const blue_board = document.querySelector("#blue-scoreboard");
 const red_board = document.querySelector("#red-scoreboard");

@@ -5,4 +5,14 @@ function msToString(ms) {
   return `${min}:${sec}:${centisec}`;
 }
 
-export default msToString;
+function saveToJSON(obj, filename) {
+  var a = document.createElement("a");
+  a.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(obj))
+  );
+  a.setAttribute("download", filename);
+  a.click();
+}
+
+export { msToString, saveToJSON };
