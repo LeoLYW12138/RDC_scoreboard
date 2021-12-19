@@ -1,7 +1,16 @@
 import { msToString } from "./utils";
 
-const blue_board = document.querySelector("#blue-scoreboard");
-const red_board = document.querySelector("#red-scoreboard");
+const RED_GV = new CustomEvent("greatVictory", {
+  detail: {
+    team: "red",
+  },
+});
+
+const BLUE_GV = new CustomEvent("greatVictory", {
+  detail: {
+    team: "blue",
+  },
+});
 
 class Record {
   static object_list = {
@@ -28,6 +37,15 @@ class Record {
     div.className = "record flex py-2";
     div.innerHTML = `<span>${this.time}</span><span>${this.action}</span><span>${this.score} (x${this.multi})</span>`;
     return div;
+  }
+
+  toObj() {
+    return {
+      time: this.time,
+      action: this.action,
+      score: this.score,
+      multi: this.multi,
+    };
   }
 }
 
@@ -71,7 +89,21 @@ function countObject(counter_states) {
   return counts;
 }
 
-function evalScore(counter_states, final = false) {
+function evalScore(pot, plate, smartcar) {
+  const score =
+    (pot % 2) * 50 +
+    Math.floor(pot / 2) * 200 +
+    (plate % 2) * 75 +
+    Math.floor(plate / 2) * 300;
+  const mul = 1 + smartcar * 0.01;
+
+  return {
+    score,
+    mul,
+  };
+}
+
+function evalResult(counter_states, final = false) {
   // expected counter_states as an associative array of (id, count)
   // 1 pot 50, 2 pots 200 "twinning"
   // 1 plate 75, 2 plate 300 "twinning"
@@ -87,23 +119,41 @@ function evalScore(counter_states, final = false) {
     blue_smartcar,
   } = countObject(counter_states);
 
-  let red_score =
-    (red_pot % 2) * 50 +
-    Math.floor(red_pot / 2) * 200 +
-    (red_plate % 2) * 75 +
-    Math.floor(red_plate / 2) * 300;
-  const red_mul = 1 + red_smartcar * 0.01;
+  let { score: red_score, mul: red_mul } = evalScore(
+    red_pot,
+    red_plate,
+    red_smartcar
+  );
+  let { score: blue_score, mul: blue_mul } = evalScore(
+    blue_pot,
+    blue_plate,
+    blue_smartcar
+  );
 
-  let blue_score =
-    (blue_pot % 2) * 50 +
-    Math.floor(blue_pot / 2) * 200 +
-    (blue_plate % 2) * 75 +
-    Math.floor(blue_plate / 2) * 300;
-  const blue_mul = 1 + blue_smartcar * 0.01;
+  const red_gv = red_pot >= 2 && red_plate >= 2;
+  const blue_gv = blue_pot >= 2 && blue_plate >= 2;
+
+  if (red_gv) document.dispatchEvent(RED_GV);
+  if (blue_gv) document.dispatchEvent(BLUE_GV);
 
   if (final) {
     red_score *= red_mul;
     blue_score *= blue_mul;
+
+    return {
+      red: {
+        score: red_score,
+        multi: red_mul,
+        gv: red_gv,
+        win: red_score > blue_score || red_gv,
+      },
+      blue: {
+        score: blue_score,
+        multi: blue_mul,
+        gv: blue_gv,
+        win: blue_score > red_score || blue_gv,
+      },
+    };
   }
 
   return {
@@ -118,4 +168,4 @@ function evalScore(counter_states, final = false) {
   };
 }
 
-export { Record, evalScore };
+export { Record, evalResult };

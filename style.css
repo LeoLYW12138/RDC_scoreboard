@@ -46,7 +46,7 @@ div.record {
 }
 
 .scoreboard {
-  @apply overflow-scroll overflow-x-hidden absolute inset-0 top-[9.5%];
+  @apply overflow-scroll overflow-x-hidden absolute inset-0;
   scrollbar-width: none;
 }
 

@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2021 RDC Scoreboard</title>
   </head>
-  <body class="bg-gray-300 relative">
+  <body class="bg-gray-300 min-h-screen flex flex-col">
     <div
       class="
-        flex flex-col
+        flex-1 flex flex-col
         justify-items-stretch
         items-center
         lg:container
@@ -17,7 +17,7 @@
         p-4
         md:px-20
         xl:px-[15%]
-        h-screen
+        h-full
       "
     >
       <header aria-label="top-bar" class="flex my-2 py-1 gap-5">
@@ -176,7 +176,7 @@
         aria-label="middle-bar"
         class="flex my-2 w-full py-1 justify-between items-center"
       >
-        <button class="text-disable <sm:text-size-xs ml-2">
+        <button id="load" class="text-disable <sm:text-size-xs ml-2">
           Load from JSON
         </button>
         <fieldset
@@ -186,13 +186,22 @@
         >
           00:00:00
         </fieldset>
-        <button class="text-disable <sm:text-size-xs mr-2">Save as JSON</button>
+        <button id="save" class="text-disable <sm:text-size-xs mr-2">
+          Save as JSON
+        </button>
       </div>
       <section
         aria-label="record"
-        class="w-full min-h-64 max-h-100 flex-grow flex gap-5 text-size-sm"
+        class="w-full min-h-64 max-h-100 mb-4 flex-grow flex gap-5 text-size-sm"
       >
-        <div class="flex-1 bg-cyan-300 bg-opacity-50 rounded-xl relative">
+        <div
+          class="
+            flex-1 flex flex-col
+            bg-cyan-300 bg-opacity-50
+            rounded-xl
+            relative
+          "
+        >
           <div
             class="
               bg-gray-400 bg-opacity-20
@@ -215,9 +224,18 @@
             <span>Action</span>
             <span>Total Score</span>
           </header>
-          <div id="blue-scoreboard" class="scoreboard"></div>
+          <div class="relative flex-grow">
+            <div id="blue-scoreboard" class="scoreboard"></div>
+          </div>
         </div>
-        <div class="flex-1 bg-red-300 bg-opacity-50 rounded-xl relative">
+        <div
+          class="
+            flex-1 flex flex-col
+            bg-red-300 bg-opacity-50
+            rounded-xl
+            relative
+          "
+        >
           <div
             class="
               bg-white bg-opacity-20
@@ -240,7 +258,9 @@
             <span>Action</span>
             <span>Total Score</span>
           </header>
-          <div id="red-scoreboard" class="scoreboard"></div>
+          <div class="flex-grow relative">
+            <div id="red-scoreboard" class="scoreboard"></div>
+          </div>
         </div>
       </section>
     </div>

@@ -1,14 +1,31 @@
 import "./style.css";
 import "virtual:windi.css";
-import { Record, evalScore } from "./score";
-import { msToString, saveToJSON } from "./utils";
+import { Record, evalResult } from "./score";
+import { msToString, saveResult } from "./utils";
 
 const counters = document.querySelectorAll(".counter");
-let counter_states = {};
+const counter_states = {};
+const records = {
+  red: [],
+  blue: [],
+};
+const team_names = [
+  "Team 1",
+  "Team 2",
+  "Team 3",
+  "Team 4",
+  "Team 5",
+  "Team 6",
+  "Team 7",
+  "Team 8",
+  "Team 9",
+];
 
 const btn_start = document.querySelector("#start");
 const btn_stop = document.querySelector("#stop");
 const btn_reset = document.querySelector("#reset");
+const btn_save = document.querySelector("#save");
+const btn_load = document.querySelector("#load");
 const down_timer = document.querySelector("#countdown-timer");
 const up_timer = document.querySelector("#countup-timer");
 
@@ -28,10 +45,12 @@ counters.forEach((counter) => {
   counter.addEventListener("click", () => {
     counter_states[counter.id]++;
     counter.innerText = counter_states[counter.id];
-    const score = evalScore(counter_states);
+    const score = evalResult(counter_states);
     const team = counter.id.split("-").slice(0, 1);
     const record = new Record(countup_time, counter.id, score[team]);
     score_boards[team].prepend(record.toHTML());
+
+    records[team].push(record.toObj());
   });
 });
 
@@ -47,6 +66,9 @@ function resetAll() {
   Object.keys(counter_states).forEach((id) => {
     counter_states[id] = 0;
   });
+
+  records.red = [];
+  records.blue = [];
 
   counters.forEach((counter) => {
     counter.innerText = counter_states[counter.id];
@@ -109,3 +131,27 @@ btn_reset.addEventListener("click", () => {
 
   resetAll();
 });
+
+btn_save.addEventListener("click", () => {
+  const final = evalResult(counter_states, true);
+  saveResult(
+    { red: team_names[1], blue: team_names[0] },
+    {
+      red: {
+        final: final.red.score,
+        greatVictory: final.red.gv,
+        win: final.red.win,
+      },
+      blue: {
+        final: final.blue.score,
+        greatVictory: final.blue.gv,
+        win: final.blue.win,
+      },
+    },
+    records
+  );
+});
+
+btn_load.addEventListener("click", () => {});
+
+document.addEventListener("greatVictory", (e) => {});
