@@ -6,263 +6,296 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2021 RDC Scoreboard</title>
   </head>
-  <body class="bg-gray-300 min-h-screen flex flex-col">
+  <body class="flex flex-col min-h-screen bg-gray-300">
     <div
-      class="
-        flex-1 flex flex-col
-        justify-items-stretch
-        items-center
-        lg:container
-        mx-auto
-        p-4
-        md:px-20
-        xl:px-[15%]
-        h-full
-      "
+      class="flex mx-auto flex-1 p-4 justify-center items-stretch lg:container"
     >
-      <header aria-label="top-bar" class="flex my-2 py-1 gap-5">
-        <button
-          id="start"
-          class="
-            top-bar-text
-            text-disable
-            pointer-events-none
-            not-disabled:pointer-events-auto
-          "
-        >
-          START
-        </button>
-        <fieldset
-          id="countdown-timer"
-          class="text-disable !text-shadow-none"
-          disabled
-        >
-          03:00:00
-        </fieldset>
-        <button
-          id="stop"
-          class="
-            top-bar-text
-            text-disable
-            pointer-events-none
-            not-disabled:pointer-events-auto
-            hidden
-          "
-        >
-          STOP
-        </button>
-        <button
-          id="reset"
-          class="
-            top-bar-text
-            text-disable
-            pointer-events-none
-            not-disabled:pointer-events-auto
-          "
-        >
-          RESET
-        </button>
-      </header>
-      <div id="game-field" class="relative max-w-screen-lg">
-        <img src="./assets/gamefield.png" alt="gamefield" />
-        <button
-          id="red-plate"
-          class="
-            ellipse-lg
-            counter
-            top-1/2
-            left-[19.7%]
-            bg-red-700
-            hover:bg-red-400
-          "
-          text="white size-3xl"
-        >
-          0
-        </button>
-        <button
-          id="blue-plate"
-          class="
-            ellipse-lg
-            counter
-            top-1/2
-            left-[80.3%]
-            bg-blue-700
-            hover:bg-blue-400
-          "
-          text="white size-3xl"
-        >
-          0
-        </button>
-        <button
-          id="blue-pot-1"
-          class="
-            ellipse-sm
-            counter
-            top-[38%]
-            left-[69%]
-            bg-cyan-300
-            hover:bg-cyan-400
-          "
-        >
-          0
-        </button>
-        <button
-          id="blue-pot-2"
-          class="
-            ellipse-sm
-            counter
-            top-[63%]
-            left-[69%]
-            bg-cyan-300
-            hover:bg-cyan-400
-          "
-        >
-          0
-        </button>
-        <button
-          id="red-pot-1"
-          class="
-            ellipse-sm
-            counter
-            top-[38%]
-            left-[31%]
-            bg-rose-300
-            hover:bg-rose-400
-          "
-        >
-          0
-        </button>
-        <button
-          id="red-pot-2"
-          class="
-            ellipse-sm
-            counter
-            top-[63%]
-            left-[31%]
-            bg-rose-300
-            hover:bg-rose-400
-          "
-        >
-          0
-        </button>
-        <button
-          id="blue-smartcar"
-          class="
-            rectangle
-            counter
-            top-[78.5%]
-            left-[31%]
-            bg-cool-gray-500
-            hover:bg-cool-gray-400
-          "
-        >
-          0
-        </button>
-        <button
-          id="red-smartcar"
-          class="
-            rectangle
-            counter
-            top-[78.5%]
-            left-[69%]
-            bg-cool-gray-500
-            hover:bg-cool-gray-400
-          "
-        >
-          0
-        </button>
-      </div>
-      <div
-        aria-label="middle-bar"
-        class="flex my-2 w-full py-1 justify-between items-center"
-      >
-        <button id="load" class="text-disable <sm:text-size-xs ml-2">
-          Load from JSON
-        </button>
-        <fieldset
-          id="countup-timer"
-          disabled
-          class="text-disable font-bold -ml-4 md:text-size-lg !text-shadow-none"
-        >
-          00:00:00
-        </fieldset>
-        <button id="save" class="text-disable <sm:text-size-xs mr-2">
-          Save as JSON
-        </button>
-      </div>
-      <section
-        aria-label="record"
-        class="w-full min-h-64 max-h-100 mb-4 flex-grow flex gap-5 text-size-sm"
-      >
-        <div
-          class="
-            flex-1 flex flex-col
-            bg-cyan-300 bg-opacity-50
-            rounded-xl
-            relative
-          "
-        >
+      <aside id="blue-score" class="bg-cyan-300 order-0 mt-20 mr-5 big-score">
+        <h3 class="w-full text-size-3xl truncate">Blue Team</h3>
+        <h1 class="text-size-8xl">0</h1>
+      </aside>
+
+      <aside id="red-score" class="bg-red-300 order-2 mt-20 ml-5 big-score">
+        <h3 class="w-full text-size-3xl truncate">Red Team</h3>
+        <h1 class="text-size-8xl">0</h1>
+      </aside>
+
+      <main class="flex flex-col">
+        <div class="flex flex-col h-full items-center">
+          <header aria-label="top-bar" class="flex my-2 py-1 gap-5">
+            <button
+              id="start"
+              class="
+                top-bar-text
+                text-disable
+                pointer-events-none
+                not-disabled:pointer-events-auto
+              "
+            >
+              START
+            </button>
+            <fieldset
+              id="countdown-timer"
+              class="text-disable !text-shadow-none"
+              disabled
+            >
+              03:00:00
+            </fieldset>
+            <button
+              id="stop"
+              class="
+                top-bar-text
+                text-disable
+                pointer-events-none
+                hidden
+                not-disabled:pointer-events-auto
+              "
+            >
+              STOP
+            </button>
+            <button
+              id="reset"
+              class="
+                top-bar-text
+                text-disable
+                pointer-events-none
+                not-disabled:pointer-events-auto
+              "
+            >
+              RESET
+            </button>
+          </header>
+          <div aria-label="game-field" class="max-w-screen-lg relative">
+            <img src="./assets/gamefield.png" alt="gamefield" />
+            <button
+              id="red-plate"
+              class="
+                bg-red-700
+                top-1/2
+                left-[19.7%]
+                ellipse-lg
+                counter
+                hover:bg-red-400
+              "
+              text="white size-3xl"
+            >
+              0
+            </button>
+            <button
+              id="blue-plate"
+              class="
+                bg-blue-700
+                top-1/2
+                left-[80.3%]
+                ellipse-lg
+                counter
+                hover:bg-blue-400
+              "
+              text="white size-3xl"
+            >
+              0
+            </button>
+            <button
+              id="blue-pot-1"
+              class="
+                bg-cyan-300
+                top-[38%]
+                left-[69%]
+                ellipse-sm
+                counter
+                hover:bg-cyan-400
+              "
+            >
+              0
+            </button>
+            <button
+              id="blue-pot-2"
+              class="
+                bg-cyan-300
+                top-[63%]
+                left-[69%]
+                ellipse-sm
+                counter
+                hover:bg-cyan-400
+              "
+            >
+              0
+            </button>
+            <button
+              id="red-pot-1"
+              class="
+                bg-rose-300
+                top-[38%]
+                left-[31%]
+                ellipse-sm
+                counter
+                hover:bg-rose-400
+              "
+            >
+              0
+            </button>
+            <button
+              id="red-pot-2"
+              class="
+                bg-rose-300
+                top-[63%]
+                left-[31%]
+                ellipse-sm
+                counter
+                hover:bg-rose-400
+              "
+            >
+              0
+            </button>
+            <button
+              id="blue-smartcar"
+              class="
+                bg-cool-gray-500
+                top-[78.5%]
+                left-[31%]
+                rectangle
+                counter
+                hover:bg-cool-gray-400
+              "
+            >
+              0
+            </button>
+            <button
+              id="red-smartcar"
+              class="
+                bg-cool-gray-500
+                top-[78.5%]
+                left-[69%]
+                rectangle
+                counter
+                hover:bg-cool-gray-400
+              "
+            >
+              0
+            </button>
+          </div>
           <div
+            aria-label="middle-bar"
             class="
-              bg-gray-400 bg-opacity-20
-              absolute
-              top-0
-              bottom-0
-              left-2/12
-              right-4/12
-            "
-          ></div>
-          <header
-            class="
-              record
               flex
-              py-2
-              border-2 border-transparent border-b-gray-700
+              max-w-screen-lg
+              my-2
+              w-full
+              py-1
+              justify-between
+              items-center
             "
           >
-            <span>Time</span>
-            <span>Action</span>
-            <span>Total Score</span>
-          </header>
-          <div class="relative flex-grow">
-            <div id="blue-scoreboard" class="scoreboard"></div>
+            <button id="load" class="text-disable ml-2 <sm:text-size-xs">
+              Load from JSON
+            </button>
+            <fieldset
+              id="countup-timer"
+              disabled
+              class="
+                font-bold
+                text-disable
+                -ml-4
+                !text-shadow-none
+                md:text-size-lg
+              "
+            >
+              00:00:00
+            </fieldset>
+            <button id="save" class="text-disable mr-2 <sm:text-size-xs">
+              Save as JSON
+            </button>
           </div>
-        </div>
-        <div
-          class="
-            flex-1 flex flex-col
-            bg-red-300 bg-opacity-50
-            rounded-xl
-            relative
-          "
-        >
-          <div
+          <section
+            aria-label="record"
             class="
-              bg-white bg-opacity-20
-              absolute
-              top-0
-              bottom-0
-              left-2/12
-              right-4/12
-            "
-          ></div>
-          <header
-            class="
-              record
-              flex
-              py-2
-              border-2 border-transparent border-b-gray-700
+              flex-grow flex
+              max-w-screen-lg
+              text-size-sm
+              mb-4
+              w-full
+              min-h-64
+              max-h-100
+              gap-5
             "
           >
-            <span>Time</span>
-            <span>Action</span>
-            <span>Total Score</span>
-          </header>
-          <div class="flex-grow relative">
-            <div id="red-scoreboard" class="scoreboard"></div>
-          </div>
+            <div
+              class="
+                rounded-xl
+                flex flex-col
+                bg-cyan-300 bg-opacity-50
+                flex-1
+                relative
+                shadow
+              "
+            >
+              <div
+                class="
+                  bg-gray-400 bg-opacity-20
+                  top-0
+                  right-4/12
+                  bottom-0
+                  left-2/12
+                  absolute
+                "
+              ></div>
+              <header
+                class="
+                  border-transparent
+                  flex
+                  border-2 border-b-gray-700
+                  py-2
+                  record
+                "
+              >
+                <span>Time</span>
+                <span>Action</span>
+                <span>Total Score</span>
+              </header>
+              <div class="flex-grow relative">
+                <div id="blue-scoreboard" class="scoreboard"></div>
+              </div>
+            </div>
+            <div
+              class="
+                rounded-xl
+                flex flex-col
+                bg-red-300 bg-opacity-50
+                flex-1
+                relative
+                shadow
+              "
+            >
+              <div
+                class="
+                  bg-white bg-opacity-20
+                  top-0
+                  right-4/12
+                  bottom-0
+                  left-2/12
+                  absolute
+                "
+              ></div>
+              <header
+                class="
+                  border-transparent
+                  flex
+                  border-2 border-b-gray-700
+                  py-2
+                  record
+                "
+              >
+                <span>Time</span>
+                <span>Action</span>
+                <span>Total Score</span>
+              </header>
+              <div class="flex-grow relative">
+                <div id="red-scoreboard" class="scoreboard"></div>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
+      </main>
     </div>
     <script type="module" src="/score.js"></script>
     <script type="module" src="/main.js"></script>

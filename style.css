@@ -3,15 +3,19 @@ button:focus {
 }
 
 .text-disable {
-  @apply not-disabled:hover:text-shadow-sm not-disabled:text-warm-gray-700 text-blue-gray-400;
+  @apply text-blue-gray-400 not-disabled:text-warm-gray-700 not-disabled:hover:text-shadow-sm;
 }
 
 .top-bar-text {
-  @apply sm:text-size-lg md:text-size-xl tracking-wider;
+  @apply tracking-wider sm:text-size-lg md:text-size-xl;
 }
 
 #countdown-timer {
-  @apply font-bold sm:text-size-2xl md:text-size-3xl lg:text-size-4xl tracking-wider;
+  @apply font-bold tracking-wider sm:text-size-2xl md:text-size-3xl lg:text-size-4xl;
+}
+
+.big-score {
+  @apply shadow-lg rounded-xl flex flex-col h-55 text-center p-4 w-60 justify-around items-center <xl:hidden;
 }
 
 div.record {
@@ -19,34 +23,34 @@ div.record {
 }
 
 .record span:nth-child(1) {
-  @apply w-2/12 text-center;
+  @apply text-center w-2/12;
 }
 
 .record span:nth-child(2) {
-  @apply w-6/12 pl-4;
+  @apply pl-4 w-6/12;
 }
 
 .record span:nth-child(3) {
-  @apply w-4/12 text-center;
+  @apply text-center w-4/12;
 }
 
 .ellipse-lg {
-  @apply absolute rounded-full w-[9%] h-[18%];
+  @apply rounded-full h-[18%] w-[9%] absolute;
   transform: translate(-50%, -50%);
 }
 
 .ellipse-sm {
-  @apply absolute rounded-full w-[4%] h-[8%];
+  @apply rounded-full h-[8%] w-[4%] absolute;
   transform: translate(-50%, -50%);
 }
 
 .rectangle {
-  @apply text-white absolute rounded-xl w-[8%] h-[8%];
+  @apply rounded-xl h-[8%] text-white w-[8%] absolute;
   transform: translate(-50%, -50%);
 }
 
 .scoreboard {
-  @apply overflow-scroll overflow-x-hidden absolute inset-0;
+  @apply inset-0 overflow-scroll overflow-x-hidden absolute;
   scrollbar-width: none;
 }
 
