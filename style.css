@@ -2,6 +2,23 @@ button:focus {
   @apply !focus:outline-none;
 }
 
+.action-btn {
+  @apply bg-emerald-300 hover:bg-emerald-200 rounded-full p-2 flex justify-center items-center gap-2;
+}
+
+/* .select-wrapper::after {
+  @apply border-gray-700 absolute p-1 w-2 h-2 -right-[2%] top-2 hidden;
+  content: "";
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+} */
+
+select {
+  @apply appearance-none bg-transparent border-none p-0 pr-4 m-0 w-full outline-none;
+  @apply text-center;
+}
+
 .text-disable {
   @apply text-blue-gray-400 not-disabled:text-warm-gray-700 not-disabled:hover:text-shadow-sm;
 }
@@ -56,4 +73,24 @@ div.record {
 
 .scoreboard::-webkit-scrollbar {
   display: none;
+}
+
+.great-victory {
+  @apply my-4 bg-[#FFD700] rounded-xl py-2 w-60 shadow flex items-center justify-center;
+}
+
+.times-up {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    @apply text-red-600;
+  }
+  49% {
+    @apply text-red-600;
+  }
+  50% {
+    @apply text-black;
+  }
 }
