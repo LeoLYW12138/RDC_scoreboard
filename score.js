@@ -24,10 +24,10 @@ class Record {
     "blue-smartcar": "smartcar",
   };
 
-  constructor(time, id, score_info) {
+  constructor(time, id, score_info, action = "+1") {
     this.time = msToString(time);
     this.team = id.split("-").slice(0, 1);
-    this.action = Record.object_list[id] + " +1";
+    this.action = Record.object_list[id] + " " + action;
     this.score = score_info.score;
     this.multi = score_info.multi;
   }

@@ -56,18 +56,34 @@ selects.forEach((select) => {
 
 counters.forEach((counter) => {
   counter_states[counter.id] = 0;
-  counter.addEventListener("click", () => {
-    counter_states[counter.id]++;
+  counter.addEventListener("mousedown", (e) => {
+    const action = changeCount(e, counter.id);
     counter.innerText = counter_states[counter.id];
     const score = evalResult(counter_states);
     const team = counter.id.split("-").slice(0, 1);
-    const record = new Record(countup_time, counter.id, score[team]);
+    const record = new Record(countup_time, counter.id, score[team], action);
     score_boards[team].prepend(record.toHTML());
     score_boards[team + "Big"].innerText = score[team].score;
 
     records[team].push(record.toObj());
   });
 });
+
+function changeCount(e, id) {
+  if (typeof e === "object") {
+    switch (e.button) {
+      case 0:
+        counter_states[id]++;
+        return "+1";
+      case 2:
+        counter_states[id]--;
+        return "-1";
+      default:
+        // ignore middle click and others
+        break;
+    }
+  }
+}
 
 function resetAll() {
   countdown_time = THREE_MIN;
@@ -78,14 +94,11 @@ function resetAll() {
   down_timer.innerText = msToString(countdown_time);
   up_timer.innerText = msToString(countup_time);
 
-  Object.keys(counter_states).forEach((id) => {
-    counter_states[id] = 0;
-  });
-
   records.red = [];
   records.blue = [];
 
   counters.forEach((counter) => {
+    counter_states[counter.id] = 0;
     counter.innerText = counter_states[counter.id];
   });
 
