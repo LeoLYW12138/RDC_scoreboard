@@ -2,6 +2,9 @@ import "./style.css";
 import "virtual:windi.css";
 import { Record, evalResult } from "./score";
 import { msToString, saveResult } from "./utils";
+import Timer from "./timer";
+import countdownAudioURI from "./assets/countdown.mp3";
+import beepAudioURI from "./assets/long_beeps.mp3";
 
 const counters = document.querySelectorAll(".counter");
 const counter_states = {};
@@ -14,7 +17,7 @@ const team_names = [
   "Now",
   "Delta Three-ta",
   "4gotton",
-  "Team FIVE",
+  "Team Fire",
   "Cancer",
   "Group 7",
   "Infinity",
@@ -38,12 +41,19 @@ const score_boards = {
   blueBig: document.querySelector("#blue-score"),
 };
 
+const countdownAudio = new Audio();
+countdownAudio.src = countdownAudioURI;
+countdownAudio.preload = "auto";
+
+const beepAudio = new Audio();
+beepAudio.src = beepAudioURI;
+beepAudio.preload = "auto";
+
 const THREE_MIN = 3 * 60 * 1000;
-let countdown_time = 0;
-let countup_time = 0;
-let countdownId = 0;
-let countupId = 0;
+let timerId = 0;
+const timer = new Timer();
 let gv = null;
+let countdownPlayed = false;
 
 selects.forEach((select) => {
   team_names.forEach((name) => {
@@ -61,7 +71,7 @@ counters.forEach((counter) => {
     counter.innerText = counter_states[counter.id];
     const score = evalResult(counter_states);
     const team = counter.id.split("-").slice(0, 1);
-    const record = new Record(countup_time, counter.id, score[team], action);
+    const record = new Record(timer.getTime(), counter.id, score[team], action);
     score_boards[team].prepend(record.toHTML());
     score_boards[team + "Big"].innerText = score[team].score;
 
@@ -86,13 +96,14 @@ function changeCount(e, id) {
 }
 
 function resetAll() {
-  countdown_time = THREE_MIN;
-  countup_time = 0;
-  countdownId = 0;
-  countupId = 0;
+  timerId = 0;
+  timer.reset();
+  countdownPlayed = false;
 
-  down_timer.innerText = msToString(countdown_time);
-  up_timer.innerText = msToString(countup_time);
+  down_timer.innerText = msToString(THREE_MIN);
+  up_timer.innerText = msToString(0);
+  up_timer.classList.remove("times-up");
+  down_timer.classList.remove("times-up");
 
   records.red = [];
   records.blue = [];
@@ -113,30 +124,32 @@ function resetAll() {
   }
 }
 
-function countdown() {
-  countdown_time -= 10;
-  let remaining = "";
-  if (countdown_time <= 0) {
-    clearInterval(countdownId);
-    remaining = "00:00:00";
-    down_timer.classList.add("times-up");
-  } else {
-    remaining = msToString(countdown_time);
-  }
-  down_timer.innerText = remaining;
+function stopTimer() {
+  timer.stop();
+  clearInterval(timerId);
+  btn_stop.click();
 }
 
-function countup() {
-  countup_time += 10;
-  let time = "";
-  if (countup_time >= THREE_MIN) {
-    clearInterval(countupId);
-    time = msToString(THREE_MIN);
-    up_timer.classList.add("times-up");
-  } else {
-    time = msToString(countup_time);
+function updateTimer() {
+  const time = timer.getTime();
+  if (time >= THREE_MIN - 5200 && !countdownPlayed) {
+    // last five seconds
+    countdownPlayed = true;
+    countdownAudio.play();
   }
-  up_timer.innerText = time;
+  if (time >= THREE_MIN) {
+    stopTimer();
+    up_timer.innerText = msToString(THREE_MIN);
+    down_timer.innerText = msToString(0);
+    up_timer.classList.add("times-up");
+    down_timer.classList.add("times-up");
+
+    beepAudio.play();
+    return;
+  }
+
+  up_timer.innerText = msToString(time);
+  down_timer.innerText = msToString(THREE_MIN - time);
 }
 
 btn_start.addEventListener("click", () => {
@@ -146,10 +159,8 @@ btn_start.addEventListener("click", () => {
   down_timer.disabled = false;
   up_timer.disabled = false;
 
-  countdown_time = THREE_MIN;
-  countup_time = 0;
-  countdownId = setInterval(countdown, 10);
-  countupId = setInterval(countup, 10);
+  timer.start();
+  timerId = setInterval(updateTimer, 8);
 });
 
 btn_stop.addEventListener("click", () => {
@@ -159,13 +170,11 @@ btn_stop.addEventListener("click", () => {
   btn_stop.classList.add("hidden");
   btn_reset.classList.remove("hidden");
 
-  clearInterval(countdownId);
-  clearInterval(countupId);
+  stopTimer();
 });
 
 btn_reset.addEventListener("click", () => {
   btn_start.disabled = false;
-
   resetAll();
 });
 
@@ -199,8 +208,7 @@ btn_load.addEventListener("click", () => {});
 
 document.addEventListener("greatVictory", (e) => {
   if (!gv) {
-    clearInterval(countdownId);
-    clearInterval(countupId);
+    stopTimer();
     btn_stop.click();
 
     const div = document.createElement("div");
