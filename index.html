@@ -8,7 +8,16 @@
   </head>
   <body class="flex flex-col min-h-screen bg-gray-300">
     <div
-      class="flex mx-auto flex-1 p-4 justify-center items-stretch lg:container"
+      class="
+        flex
+        mx-auto
+        flex-1
+        p-4
+        justify-center
+        items-stretch
+        lg:container
+        relative
+      "
     >
       <aside>
         <div class="bg-cyan-300 order-0 mt-20 mr-5 big-score">
@@ -67,7 +76,7 @@
               class="text-disable !text-shadow-none"
               disabled
             >
-              03:00.00
+              01:00.00
             </fieldset>
             <button
               id="stop"
@@ -184,7 +193,7 @@
             <button
               id="blue-smartcar"
               class="
-                bg-cool-gray-500
+                bg-blue-700
                 top-[78.5%]
                 left-[31%]
                 rectangle
@@ -198,7 +207,7 @@
             <button
               id="red-smartcar"
               class="
-                bg-cool-gray-500
+                bg-red-700
                 top-[78.5%]
                 left-[69%]
                 rectangle
@@ -391,9 +400,57 @@
           </section>
         </div>
       </main>
+      <div
+        class="
+          drop-area
+          absolute
+          w-100
+          h-100
+          inset-0
+          m-auto
+          bg-gray-400 bg-opacity-90
+          rounded-xl
+          border-dotted border-6 border-gray-900
+          flex flex-col
+          items-center
+          hidden
+        "
+      >
+        <form
+          action="return false;"
+          class="my-4 px-4 font-bold flex flex-col items-center gap-4"
+        >
+          <label
+            for="file-upload"
+            class="
+              inline-block
+              p-2
+              rounded-lg
+              cursor-pointer
+              bg-cool-gray-300
+              shadow
+              hover:bg-cool-gray-700
+              hover:shadow-xl
+              hover:text-white
+            "
+            >Upload here</label
+          >
+          <span id="file-name"></span>
+          <input
+            type="file"
+            name="result-upload"
+            id="file-upload"
+            class="hidden"
+            accept="application/JSON"
+            onchange="handleFile(this.files);"
+          />
+        </form>
+        <span class="text-white font-bold absolute top-1/2">Or drag here</span>
+      </div>
     </div>
     <script type="module" src="/score.js"></script>
     <script type="module" src="/main.js"></script>
     <script type="module" src="/timer.js"></script>
+    <script type="module" src="/upload.js"></script>
   </body>
 </html>

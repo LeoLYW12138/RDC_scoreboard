@@ -4,7 +4,8 @@ import { Record, evalResult } from "./score";
 import { msToString, saveResult } from "./utils";
 import Timer from "./timer";
 import countdownAudioURI from "./assets/countdown.mp3";
-import beepAudioURI from "./assets/long_beeps.mp3";
+import longBeepAudioURI from "./assets/long_beeps.mp3";
+import beepAudioURI from "./assets/beeps.mp3";
 
 const counters = document.querySelectorAll(".counter");
 const counter_states = {};
@@ -13,7 +14,7 @@ const records = {
   blue: [],
 };
 const team_names = [
-  "Alkaline Metal",
+  "Alkali Metal",
   "Now",
   "Delta Three-ta",
   "4gotton",
@@ -44,13 +45,22 @@ const score_boards = {
 const countdownAudio = new Audio();
 countdownAudio.src = countdownAudioURI;
 countdownAudio.preload = "auto";
+countdownAudio.volume = 0.5;
+
+const longBeepAudio = new Audio();
+longBeepAudio.src = longBeepAudioURI;
+longBeepAudio.preload = "auto";
+longBeepAudio.volume = 0.5;
 
 const beepAudio = new Audio();
 beepAudio.src = beepAudioURI;
 beepAudio.preload = "auto";
+beepAudio.volume = 0.5;
 
+const ONE_MIN = 1 * 60 * 1000;
 const THREE_MIN = 3 * 60 * 1000;
 let timerId = 0;
+let targetTime = 0;
 const timer = new Timer();
 let gv = null;
 let countdownPlayed = false;
@@ -99,8 +109,9 @@ function resetAll() {
   timerId = 0;
   timer.reset();
   countdownPlayed = false;
+  targetTime = ONE_MIN;
 
-  down_timer.innerText = msToString(THREE_MIN);
+  down_timer.innerText = msToString(ONE_MIN);
   up_timer.innerText = msToString(0);
   up_timer.classList.remove("times-up");
   down_timer.classList.remove("times-up");
@@ -118,8 +129,10 @@ function resetAll() {
   score_boards.redBig.innerText = "0";
   score_boards.blueBig.innerText = "0";
 
-  if (gv) {
-    gv.outerHTML = "";
+  const GV = document.querySelector(".great-victory");
+
+  if (GV) {
+    GV.outerHTML = "";
     gv = null;
   }
 }
@@ -127,29 +140,37 @@ function resetAll() {
 function stopTimer() {
   timer.stop();
   clearInterval(timerId);
-  btn_stop.click();
 }
 
 function updateTimer() {
   const time = timer.getTime();
-  if (time >= THREE_MIN - 5200 && !countdownPlayed) {
+  if (time >= targetTime - 5200 && !countdownPlayed) {
     // last five seconds
     countdownPlayed = true;
     countdownAudio.play();
   }
   if (time >= THREE_MIN) {
     stopTimer();
+    btn_stop.click();
     up_timer.innerText = msToString(THREE_MIN);
     down_timer.innerText = msToString(0);
     up_timer.classList.add("times-up");
     down_timer.classList.add("times-up");
 
-    beepAudio.play();
+    longBeepAudio.play();
     return;
+  } else if (targetTime == ONE_MIN && time >= ONE_MIN) {
+    countdownPlayed = false;
+    beepAudio.play();
+    stopTimer();
+    timer.reset();
+    targetTime = THREE_MIN;
+    timer.start();
+    timerId = setInterval(updateTimer, 8);
   }
 
   up_timer.innerText = msToString(time);
-  down_timer.innerText = msToString(THREE_MIN - time);
+  down_timer.innerText = msToString(targetTime - time);
 }
 
 btn_start.addEventListener("click", () => {
@@ -159,6 +180,7 @@ btn_start.addEventListener("click", () => {
   down_timer.disabled = false;
   up_timer.disabled = false;
 
+  targetTime = ONE_MIN;
   timer.start();
   timerId = setInterval(updateTimer, 8);
 });
@@ -204,7 +226,9 @@ btn_final.addEventListener("click", () => {
   score_boards.redBig.innerText = +final.red.score.toFixed(1);
 });
 
-btn_load.addEventListener("click", () => {});
+btn_load.addEventListener("click", () => {
+  document.querySelector(".drop-area").classList.toggle("hidden");
+});
 
 document.addEventListener("greatVictory", (e) => {
   if (!gv) {

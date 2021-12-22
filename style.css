@@ -19,6 +19,14 @@ select {
   @apply text-center;
 }
 
+.drop-highlight {
+  @apply !border-emerald-300;
+}
+
+.drop-success {
+  @apply !bg-emerald-300;
+}
+
 .text-disable {
   @apply text-blue-gray-400 not-disabled:text-warm-gray-700 not-disabled:hover:text-shadow-sm;
 }
