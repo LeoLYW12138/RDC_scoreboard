@@ -18,7 +18,7 @@ git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f git@github.com:HKUST-Robotics-Team/HKUST-Robotics-Team.github.io.git main
-git push -u robotics main
+git push -u origin main
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
 # git push -f git@github.com:<USERNAME>/<REPO>.git main:gh-pages

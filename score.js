@@ -25,7 +25,7 @@ class Record {
   };
 
   constructor(time, id, score_info, action = "+1") {
-    this.time = msToString(time);
+    this.time = typeof time === "number" ? msToString(time) : time;
     this.team = id.split("-").slice(0, 1);
     this.action = Record.object_list[id] + " " + action;
     this.score = score_info.score;
