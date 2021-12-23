@@ -109,7 +109,7 @@ function evalResult(counter_states, final = false) {
   // 1 plate 75, 2 plate 300 "twinning"
   // 1 loop 1 %
   // final score = (pot + plate) * (1 + smartcar)
-  // 2 pots + 2 plate = Great victory
+  // 1 in each pot + 2 plate = Great victory
   const {
     red_pot,
     red_plate,
@@ -130,8 +130,14 @@ function evalResult(counter_states, final = false) {
     blue_smartcar
   );
 
-  const red_gv = red_pot >= 2 && red_plate >= 2;
-  const blue_gv = blue_pot >= 2 && blue_plate >= 2;
+  const red_gv =
+    counter_states["red-pot-1"] >= 1 &&
+    counter_states["red-pot-2"] >= 1 &&
+    red_plate >= 2;
+  const blue_gv =
+    counter_states["blue-pot-1"] >= 1 &&
+    counter_states["blue-pot-2"] >= 1 &&
+    blue_plate >= 2;
 
   if (red_gv) document.dispatchEvent(RED_GV);
   if (blue_gv) document.dispatchEvent(BLUE_GV);
