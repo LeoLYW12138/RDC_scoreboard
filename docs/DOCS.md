@@ -2,6 +2,7 @@
 name: 2021 RDC Scoreboard
 thumbnail: thumbnail.png
 description: A scoreboard designed for HKUST Robotics Team Robot Design Contest 2021
+demo_url: https://hkust-robotics-team.github.io/RDC2021/
 ---
 
 ![](thumbnail.png)
