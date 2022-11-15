@@ -1,0 +1,15 @@
+{
+  "name": "score_board",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "./deploy.sh"
+  },
+  "devDependencies": {
+    "vite": "^2.7.2",
+    "vite-plugin-windicss": "^1.5.4",
+    "windicss": "^3.3.0"
+  }
+}

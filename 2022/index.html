@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2022 RDC Scoreboard</title>
+  </head>
+  <body class="flex flex-col min-h-screen bg-gray-300">
+    <div class="flex mx-auto flex-1 p-4 justify-center items-stretch lg:container relative">
+      <!-- <aside>
+        <div class="bg-cyan-300 order-0 mt-20 mr-5 big-score">
+          <div class="select-wrapper relative hover:after:block">
+            <select
+              class="team-name w-full text-size-3xl cursor-pointer overflow-visible children:bg-cyan-200"
+            >
+              <option value="-1" selected>Blue Team</option>
+            </select>
+          </div>
+          <h1 id="blue-score" class="text-size-8xl">0</h1>
+        </div>
+      </aside>
+
+      <aside class="bg-red-300 order-2 mt-20 ml-5 big-score">
+        <div class="select-wrapper relative hover:after:block">
+          <select
+            class="team-name w-full text-size-3xl cursor-pointer overflow-visible children:bg-red-200"
+          >
+            <option value="-1" selected>Red Team</option>
+          </select>
+        </div>
+        <h1 id="red-score" class="text-size-8xl">0</h1>
+      </aside> -->
+
+      <main class="flex flex-col">
+        <div class="flex flex-col h-full items-center">
+          <header aria-label="top-bar" class="flex my-2 py-1 gap-5">
+            <button
+              id="start"
+              class="top-bar-text text-disable pointer-events-none not-disabled:pointer-events-auto"
+            >
+              START
+            </button>
+            <fieldset id="countdown-timer" class="text-disable block !text-shadow-none" disabled>
+              01:00.00
+            </fieldset>
+            <button
+              id="stop"
+              class="top-bar-text text-disable pointer-events-none hidden not-disabled:pointer-events-auto"
+            >
+              STOP
+            </button>
+            <button
+              id="reset"
+              class="top-bar-text text-disable pointer-events-none not-disabled:pointer-events-auto"
+            >
+              RESET
+            </button>
+          </header>
+          <div aria-label="game-field" class="max-w-screen-lg relative">
+            <img src="./assets/RDC_gamefield_2022.png" alt="gamefield" />
+            <div
+              id="grid"
+              class="grid grid-cols-3 grid-rows-3 w-[13.5%] h-[14%] top-[50.5%] left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2"
+            >
+              <button id="0" class="bg-[#545454] text-white counter">0</button>
+              <button id="1" class="bg-[#545454] text-white counter">0</button>
+              <button id="2" class="bg-[#545454] text-white counter">0</button>
+              <button id="3" class="bg-[#545454] text-white counter">0</button>
+              <button id="4" class="bg-[#545454] text-white counter">0</button>
+              <button id="5" class="bg-[#545454] text-white counter">0</button>
+              <button id="6" class="bg-[#545454] text-white counter">0</button>
+              <button id="7" class="bg-[#545454] text-white counter">0</button>
+              <button id="8" class="bg-[#545454] text-white counter">0</button>
+            </div>
+            <button
+              id="red-base"
+              class="bg-red-700 top-[40.2%] left-[46.7%] square hover:bg-red-400"
+              text="white size-3xl"
+              oncontextmenu="event.preventDefault();"
+            >
+              ✓
+            </button>
+            <button
+              id="blue-base"
+              class="bg-blue-700 top-[61%] left-[53.3%] square hover:bg-blue-400"
+              text="white size-3xl"
+              oncontextmenu="event.preventDefault();"
+            >
+              ✓
+            </button>
+            <button
+              id="blue-smartcar"
+              class="bg-blue-700 top-[50%] left-[92.5%] rectangle counter hover:bg-blue-400"
+              oncontextmenu="event.preventDefault();"
+            >
+              0
+            </button>
+            <button
+              id="red-smartcar"
+              class="bg-red-700 top-[51%] left-[7.5%] rectangle counter hover:bg-rose-400"
+              oncontextmenu="event.preventDefault();"
+            >
+              0
+            </button>
+          </div>
+          <div
+            aria-label="middle-bar"
+            class="flex max-w-screen-lg my-2 w-full py-1 justify-center items-center relative"
+          >
+            <!-- <button
+              id="cal-final-score"
+              class="text-disable ml-2 <sm:text-size-xs action-btn mr-auto"
+            >
+              <svg
+                width="12"
+                height="16"
+                viewBox="0 0 12 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11 2H2.92188L6.85938 7.51562C7.04688 7.83854 7.05208 8.16146 6.875 8.48438C6.85417 8.51562 6.51562 8.99219 5.85938 9.91406C5.20312 10.8359 4.55208 11.7474 3.90625 12.6484L2.9375 14H11C11.2812 14 11.5182 14.099 11.7109 14.2969C11.9036 14.4948 12 14.7318 12 15.0078C12 15.2839 11.9036 15.5182 11.7109 15.7109C11.5182 15.9036 11.2812 16 11 16H1C0.71875 16 0.481771 15.9036 0.289062 15.7109C0.0963542 15.5182 0 15.2812 0 15C0 14.8125 0.104167 14.5729 0.3125 14.2812L4.78125 8.01562C1.77083 3.79688 0.21875 1.61979 0.125 1.48438C0.0416667 1.32812 0 1.16667 0 1C0 0.71875 0.0989583 0.481771 0.296875 0.289062C0.494792 0.0963542 0.729167 0 1 0H11C11.2812 0 11.5182 0.0963542 11.7109 0.289062C11.9036 0.481771 12 0.716146 12 0.992188C12 1.26823 11.9036 1.50521 11.7109 1.70312C11.5182 1.90104 11.2812 2 11 2Z"
+                  fill="black"
+                />
+              </svg>
+              Final Score
+            </button> -->
+            <fieldset
+              id="countup-timer"
+              disabled
+              class="font-bold text-disable !text-shadow-none md:text-size-lg absolute left-auto right-auto"
+            >
+              00:00.00
+            </fieldset>
+            <button id="load" class="text-disable ml-2 <sm:text-size-xs action-btn ml-auto">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fas"
+                data-icon="upload"
+                class="w-4 h-4"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
+                ></path>
+              </svg>
+              Load JSON
+            </button>
+            <button id="save" class="text-disable mx-2 <sm:text-size-xs action-btn">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fas"
+                data-icon="file-download"
+                class="w-4 h-4"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm76.45 211.36l-96.42 95.7c-6.65 6.61-17.39 6.61-24.04 0l-96.42-95.7C73.42 337.29 80.54 320 94.82 320H160v-80c0-8.84 7.16-16 16-16h32c8.84 0 16 7.16 16 16v80h65.18c14.28 0 21.4 17.29 11.27 27.36zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z"
+                ></path>
+              </svg>
+              Save JSON
+            </button>
+          </div>
+          <!-- <section
+            aria-label="record"
+            class="flex-grow flex max-w-screen-lg text-size-sm mb-4 w-full min-h-64 max-h-100 gap-5"
+          >
+            <div class="rounded-xl flex flex-col bg-cyan-300 bg-opacity-50 flex-1 relative shadow">
+              <div
+                class="bg-gray-400 bg-opacity-20 top-0 right-4/12 bottom-0 left-2/12 absolute"
+              ></div>
+              <header
+                class="border-transparent flex border-2 border-b-gray-700 py-2 record font-bold"
+              >
+                <span>Time</span>
+                <span>Action</span>
+                <span>Total Score</span>
+              </header>
+              <div class="flex-grow relative">
+                <div id="blue-scoreboard" class="scoreboard"></div>
+              </div>
+            </div>
+            <div class="rounded-xl flex flex-col bg-red-300 bg-opacity-50 flex-1 relative shadow">
+              <div
+                class="bg-white bg-opacity-20 top-0 right-4/12 bottom-0 left-2/12 absolute"
+              ></div>
+              <header
+                class="border-transparent flex border-2 border-b-gray-700 py-2 record font-bold"
+              >
+                <span>Time</span>
+                <span>Action</span>
+                <span>Total Score</span>
+              </header>
+              <div class="flex-grow relative">
+                <div id="red-scoreboard" class="scoreboard"></div>
+              </div>
+            </div>
+          </section> -->
+        </div>
+      </main>
+      <div
+        class="drop-area absolute w-100 h-100 inset-0 m-auto bg-gray-400 bg-opacity-90 rounded-xl border-dotted border-6 border-gray-900 flex flex-col items-center hidden"
+      >
+        <form action="return false;" class="my-4 px-4 font-bold flex flex-col items-center gap-4">
+          <label
+            for="file-upload"
+            class="inline-block p-2 rounded-lg cursor-pointer bg-cool-gray-300 shadow hover:bg-cool-gray-700 hover:shadow-xl hover:text-white"
+            >Upload here</label
+          >
+          <span id="file-name"></span>
+          <input
+            type="file"
+            name="result-upload"
+            id="file-upload"
+            class="hidden"
+            accept="application/JSON"
+            onchange="handleFile(this.files);"
+          />
+        </form>
+        <span class="text-white font-bold absolute top-1/2">Or drag here</span>
+      </div>
+    </div>
+    <script type="module" src="/score.js"></script>
+    <script type="module" src="/main.js"></script>
+    <script type="module" src="/timer.js"></script>
+    <script type="module" src="/upload.js"></script>
+  </body>
+</html>

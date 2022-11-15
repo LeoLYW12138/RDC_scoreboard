@@ -1,0 +1,39 @@
+{
+    "createdAt": "date",
+    "data": {
+        "red": {
+            "name": "team name",
+            "finalScore": 32,
+            "greatVictory": false,
+            "win": true,
+            "records": [
+                {
+                    "time": "00:32:23",
+                    "action": "plate +1",
+                    "score": 200,
+                    "multi": 1.05
+                }
+            ]
+        },
+        "blue" : {
+            "name": "team name",
+            "finalScore": 20,
+            "greatVictory": false,
+            "win": false,
+            "records": [
+                {
+                    "time": "00:32:23",
+                    "action": "smartcar +1",
+                    "score": 200,
+                    "multi": 1.1
+                },
+                {
+                    "time": "01:12:33",
+                    "action": "pot 2 +1",
+                    "score": 320,
+                    "multi": 1.02
+                }
+            ]
+        }
+    }
+}
