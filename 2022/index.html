@@ -2,35 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2022 RDC Scoreboard</title>
   </head>
   <body class="flex flex-col min-h-screen bg-gray-300">
     <div class="flex mx-auto flex-1 p-4 justify-center items-stretch lg:container relative">
-      <!-- <aside>
+      <aside>
         <div class="bg-cyan-300 order-0 mt-20 mr-5 big-score">
           <div class="select-wrapper relative hover:after:block">
             <select
-              class="team-name w-full text-size-3xl cursor-pointer overflow-visible children:bg-cyan-200"
+              class="team-name w-full text-size-4xl cursor-pointer overflow-visible children:bg-cyan-200"
             >
               <option value="-1" selected>Blue Team</option>
             </select>
           </div>
-          <h1 id="blue-score" class="text-size-8xl">0</h1>
+          <!-- <h1 id="blue-score" class="text-size-8xl">0</h1> -->
         </div>
       </aside>
 
       <aside class="bg-red-300 order-2 mt-20 ml-5 big-score">
         <div class="select-wrapper relative hover:after:block">
           <select
-            class="team-name w-full text-size-3xl cursor-pointer overflow-visible children:bg-red-200"
+            class="team-name w-full text-size-4xl cursor-pointer overflow-visible children:bg-red-200"
           >
             <option value="-1" selected>Red Team</option>
           </select>
         </div>
-        <h1 id="red-score" class="text-size-8xl">0</h1>
-      </aside> -->
+        <!-- <h1 id="red-score" class="text-size-8xl">0</h1> -->
+      </aside>
 
       <main class="flex flex-col">
         <div class="flex flex-col h-full items-center">
@@ -63,32 +63,31 @@
               id="grid"
               class="grid grid-cols-3 grid-rows-3 w-[13.5%] h-[14%] top-[50.5%] left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2"
             >
-              <button id="0" class="bg-[#545454] text-white counter">0</button>
-              <button id="1" class="bg-[#545454] text-white counter">0</button>
-              <button id="2" class="bg-[#545454] text-white counter">0</button>
-              <button id="3" class="bg-[#545454] text-white counter">0</button>
-              <button id="4" class="bg-[#545454] text-white counter">0</button>
-              <button id="5" class="bg-[#545454] text-white counter">0</button>
-              <button id="6" class="bg-[#545454] text-white counter">0</button>
-              <button id="7" class="bg-[#545454] text-white counter">0</button>
-              <button id="8" class="bg-[#545454] text-white counter">0</button>
+              <button id="1" class="bg-[#545454] text-white hover:bg-opacity-80">1</button>
+              <button id="2" class="bg-[#545454] text-white hover:bg-opacity-80">2</button>
+              <button id="3" class="bg-[#545454] text-white hover:bg-opacity-80">3</button>
+              <button id="4" class="bg-[#545454] text-white hover:bg-opacity-80">4</button>
+              <button id="5" class="bg-[#545454] text-white hover:bg-opacity-80">5</button>
+              <button id="6" class="bg-[#545454] text-white hover:bg-opacity-80">6</button>
+              <button id="7" class="bg-[#545454] text-white hover:bg-opacity-80">7</button>
+              <button id="8" class="bg-[#545454] text-white hover:bg-opacity-80">8</button>
+              <button id="9" class="bg-[#545454] text-white hover:bg-opacity-80">9</button>
+              <!-- <div
+                class="bg-[#FFDF00BC] pointer-events-none rounded-full h-[5%] w-[80%] absolute top-1/2 left-0 rotate-90 transform -translate-x-1/2 -translate-y-1/2"
+              ></div> -->
             </div>
             <button
               id="red-base"
               class="bg-red-700 top-[40.2%] left-[46.7%] square hover:bg-red-400"
               text="white size-3xl"
               oncontextmenu="event.preventDefault();"
-            >
-              ✓
-            </button>
+            ></button>
             <button
               id="blue-base"
               class="bg-blue-700 top-[61%] left-[53.3%] square hover:bg-blue-400"
               text="white size-3xl"
               oncontextmenu="event.preventDefault();"
-            >
-              ✓
-            </button>
+            ></button>
             <button
               id="blue-smartcar"
               class="bg-blue-700 top-[50%] left-[92.5%] rectangle counter hover:bg-blue-400"
@@ -133,7 +132,7 @@
             >
               00:00.00
             </fieldset>
-            <button id="load" class="text-disable ml-2 <sm:text-size-xs action-btn ml-auto">
+            <!-- <button id="load" class="text-disable ml-2 <sm:text-size-xs action-btn ml-auto">
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -168,7 +167,7 @@
                 ></path>
               </svg>
               Save JSON
-            </button>
+            </button> -->
           </div>
           <!-- <section
             aria-label="record"
@@ -207,7 +206,7 @@
           </section> -->
         </div>
       </main>
-      <div
+      <!-- <div
         class="drop-area absolute w-100 h-100 inset-0 m-auto bg-gray-400 bg-opacity-90 rounded-xl border-dotted border-6 border-gray-900 flex flex-col items-center hidden"
       >
         <form action="return false;" class="my-4 px-4 font-bold flex flex-col items-center gap-4">
@@ -227,11 +226,10 @@
           />
         </form>
         <span class="text-white font-bold absolute top-1/2">Or drag here</span>
-      </div>
+      </div> -->
     </div>
-    <script type="module" src="/score.js"></script>
-    <script type="module" src="/main.js"></script>
-    <script type="module" src="/timer.js"></script>
-    <script type="module" src="/upload.js"></script>
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/timer.js"></script>
+    <!-- <script type="module" src="src/upload.js"></script> -->
   </body>
 </html>
