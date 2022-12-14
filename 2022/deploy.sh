@@ -11,4 +11,4 @@ git add -A
 
 git commit -m "deploy"
 
-git push
+git push --recurse-submodules=only
