@@ -1,0 +1,3 @@
+[submodule "gh-page"]
+	path = gh-page
+	url = git@github.com:HKUST-Robotics-Team/HKUST-Robotics-Team.github.io.git
