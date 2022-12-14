@@ -66,11 +66,12 @@ class Timer {
 
 const down_timer = document.querySelector("#countdown-timer");
 const up_timer = document.querySelector("#countup-timer");
+const btn_stop = document.querySelector("#stop");
 
 let timerId = 0;
 let targetTime = 0;
-const timer = new Timer();
 let countdownPlayed = false;
+const timer = new Timer();
 
 const countdownAudio = new Audio();
 countdownAudio.src = countdownAudioURI;
@@ -87,16 +88,18 @@ beepAudio.src = beepAudioURI;
 beepAudio.preload = "auto";
 beepAudio.volume = 0.5;
 
+const HALF_MIN = 30 * 1000;
 const ONE_MIN = 1 * 60 * 1000;
 const THREE_MIN = 3 * 60 * 1000;
 
-function startTimer() {
+function startTimer(_targetTime = ONE_MIN) {
   down_timer.disabled = false;
   up_timer.disabled = false;
 
-  targetTime = ONE_MIN;
+  targetTime = _targetTime;
   timer.start();
   timerId = setInterval(updateTimer, 8);
+  console.log("start timer, ", targetTime);
 }
 
 function stopTimer() {
@@ -113,7 +116,9 @@ function updateTimer() {
     countdownPlayed = true;
     countdownAudio.play();
   }
-  if (time >= THREE_MIN) {
+  if (targetTime === THREE_MIN && time >= THREE_MIN) {
+    console.log("ho", time);
+    longBeepAudio.play();
     stopTimer();
     btn_stop.click();
     up_timer.innerText = msToString(THREE_MIN);
@@ -121,9 +126,16 @@ function updateTimer() {
     up_timer.classList.add("times-up");
     down_timer.classList.add("times-up");
 
-    longBeepAudio.play();
+    const timerEndedEvent = new CustomEvent("timerEnded", {
+      detail: {
+        targetTime: THREE_MIN,
+      },
+    });
+    document.dispatchEvent(timerEndedEvent);
+
     return;
   } else if (targetTime == ONE_MIN && time >= ONE_MIN) {
+    console.log("hey");
     countdownPlayed = false;
     beepAudio.play();
     stopTimer();
@@ -131,6 +143,14 @@ function updateTimer() {
     targetTime = THREE_MIN;
     timer.start();
     timerId = setInterval(updateTimer, 8);
+  } else if (targetTime === HALF_MIN && time >= HALF_MIN) {
+    longBeepAudio.play();
+    stopTimer();
+    btn_stop.click();
+    up_timer.innerText = msToString(HALF_MIN);
+    down_timer.innerText = msToString(0);
+    up_timer.classList.add("times-up");
+    down_timer.classList.add("times-up");
   }
 
   up_timer.innerText = msToString(time);

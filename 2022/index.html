@@ -34,16 +34,29 @@
 
       <main class="flex flex-col">
         <div class="flex flex-col h-full items-center">
-          <header aria-label="top-bar" class="flex my-2 py-1 gap-5">
+          <header aria-label="top-bar" class="flex justify-center w-full my-2 py-1 gap-5 relative">
             <button
               id="start"
               class="top-bar-text text-disable pointer-events-none not-disabled:pointer-events-auto"
             >
               START
             </button>
-            <fieldset id="countdown-timer" class="text-disable block !text-shadow-none" disabled>
-              01:00.00
-            </fieldset>
+            <div class="flex flex-col gap-2 justify-center items-center">
+              <fieldset
+                id="countdown-timer"
+                class="block text-disable block !text-shadow-none"
+                disabled
+              >
+                01:00.00
+              </fieldset>
+              <fieldset
+                id="countup-timer"
+                disabled
+                class="block font-bold text-disable !text-shadow-none md:text-size-lg left-auto right-auto"
+              >
+                00:00.00
+              </fieldset>
+            </div>
             <button
               id="stop"
               class="top-bar-text text-disable pointer-events-none hidden not-disabled:pointer-events-auto"
@@ -56,12 +69,18 @@
             >
               RESET
             </button>
+            <button
+              id="appeal"
+              class="top-bar-text hidden absolute top-1/2 transform -translate-y-1/2 right-0 lg:right-1/5 text-red-500 hover:underline pointer-events-none not-disabled:pointer-events-auto"
+            >
+              APPEAL
+            </button>
           </header>
           <div aria-label="game-field" class="max-w-screen-lg relative">
             <img src="./assets/RDC_gamefield_2022.png" alt="gamefield" />
             <div
               id="grid"
-              class="grid grid-cols-3 grid-rows-3 w-[13.5%] h-[14%] top-[50.5%] left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2"
+              class="grid grid-cols-3 grid-rows-3 w-[13.5%] h-[14%] top-[50.5%] left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2 text-sm lg:text-base"
             >
               <button id="1" class="bg-[#545454] text-white hover:bg-opacity-80">1</button>
               <button id="2" class="bg-[#545454] text-white hover:bg-opacity-80">2</button>
@@ -125,13 +144,6 @@
               </svg>
               Final Score
             </button> -->
-            <fieldset
-              id="countup-timer"
-              disabled
-              class="font-bold text-disable !text-shadow-none md:text-size-lg absolute left-auto right-auto"
-            >
-              00:00.00
-            </fieldset>
             <!-- <button id="load" class="text-disable ml-2 <sm:text-size-xs action-btn ml-auto">
               <svg
                 aria-hidden="true"

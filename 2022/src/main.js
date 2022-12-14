@@ -24,6 +24,7 @@ const WINNING_COMB = ["123", "456", "789", "147", "258", "369", "159", "357"];
 const btn_start = document.querySelector("#start");
 const btn_stop = document.querySelector("#stop");
 const btn_reset = document.querySelector("#reset");
+const btn_appeal = document.querySelector("#appeal");
 const btn_save = document.querySelector("#save");
 const btn_load = document.querySelector("#load");
 const btn_final = document.querySelector("#cal-final-score");
@@ -192,8 +193,22 @@ btn_stop.addEventListener("click", () => {
 
 btn_reset.addEventListener("click", () => {
   btn_start.disabled = false;
+  btn_appeal.classList.add("hidden");
   resetTimer();
   resetAll();
+});
+
+btn_appeal.addEventListener("click", () => {
+  resetTimer();
+  btn_start.disabled = true;
+  btn_stop.classList.remove("hidden");
+  btn_reset.classList.add("hidden");
+
+  startTimer(30 * 1000);
+});
+
+document.addEventListener("timerEnded", (e) => {
+  btn_appeal.classList.remove("hidden");
 });
 
 function resetAll() {
