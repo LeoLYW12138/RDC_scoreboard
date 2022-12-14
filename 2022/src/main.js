@@ -36,13 +36,6 @@ const bases = {
 };
 const grid = document.querySelector("#grid");
 
-const score_boards = {
-  red: document.querySelector("#red-scoreboard"),
-  blue: document.querySelector("#blue-scoreboard"),
-  redBig: document.querySelector("#red-score"),
-  blueBig: document.querySelector("#blue-score"),
-};
-
 selects.forEach((select) => {
   team_names.forEach((name) => {
     const option = document.createElement("option");
@@ -109,6 +102,8 @@ grid.addEventListener("mousedown", (e) => {
         red_ids.includes(winComb[2])
       ) {
         line || drawWinningLine(winComb, "red");
+        const winEvent = new CustomEvent("greatVictory", { detail: { team: "red" } });
+        document.dispatchEvent(winEvent);
       } else {
         line?.dataset.color === "red" && grid.removeChild(line);
       }
@@ -118,6 +113,8 @@ grid.addEventListener("mousedown", (e) => {
         blue_ids.includes(winComb[2])
       ) {
         line || drawWinningLine(winComb, "blue");
+        const winEvent = new CustomEvent("greatVictory", { detail: { team: "blue" } });
+        document.dispatchEvent(winEvent);
       } else {
         line?.dataset.color === "blue" && grid.removeChild(line);
       }
@@ -228,6 +225,7 @@ function resetAll() {
   });
 
   grid.querySelectorAll("div").forEach((line) => grid.removeChild(line));
+  document.querySelectorAll(".great-victory").forEach((div) => div.remove());
 
   // score_boards.red.innerHTML = "";
   // score_boards.blue.innerHTML = "";
@@ -265,20 +263,17 @@ function resetAll() {
 //   document.querySelector(".drop-area").classList.toggle("hidden");
 // });
 
-// document.addEventListener("greatVictory", (e) => {
-//   if (!gv) {
-//     stopTimer();
-//     btn_stop.click();
+document.addEventListener("greatVictory", (e) => {
+  stopTimer();
+  btn_stop.click();
 
-//     const div = document.createElement("div");
-//     div.classList.add("great-victory");
-//     const h1 = document.createElement("h1");
-//     h1.innerText = "Great Victory";
-//     h1.classList.add("text-size-3xl", "font-bold");
-//     div.appendChild(h1);
+  const div = document.createElement("div");
+  div.classList.add("great-victory");
+  const h1 = document.createElement("h1");
+  h1.innerText = "Great Victory";
+  h1.classList.add("text-size-3xl", "font-bold");
+  div.appendChild(h1);
 
-//     const board = score_boards[e.detail.team + "Big"];
-//     board.parentNode.insertBefore(div, board.nextSibling);
-//     gv = div;
-//   }
-// });
+  const team_scoreboard = document.querySelector(`#${e.detail.team}-team`);
+  team_scoreboard.appendChild(div);
+});

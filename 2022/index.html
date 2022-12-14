@@ -8,20 +8,18 @@
   </head>
   <body class="flex flex-col min-h-screen bg-gray-300">
     <div class="flex mx-auto flex-1 p-4 justify-center items-stretch lg:container relative">
-      <aside>
-        <div class="bg-cyan-300 order-0 mt-20 mr-5 big-score">
-          <div class="select-wrapper relative hover:after:block">
-            <select
-              class="team-name w-full text-size-4xl cursor-pointer overflow-visible children:bg-cyan-200"
-            >
-              <option value="-1" selected>Blue Team</option>
-            </select>
-          </div>
-          <!-- <h1 id="blue-score" class="text-size-8xl">0</h1> -->
+      <aside id="blue-team" class="bg-cyan-300 order-0 mt-20 mr-5 big-score">
+        <div class="select-wrapper relative hover:after:block">
+          <select
+            class="team-name w-full text-size-4xl cursor-pointer overflow-visible children:bg-cyan-200"
+          >
+            <option value="-1" selected>Blue Team</option>
+          </select>
         </div>
+        <!-- <h1 id="blue-score" class="text-size-8xl">0</h1> -->
       </aside>
 
-      <aside class="bg-red-300 order-2 mt-20 ml-5 big-score">
+      <aside id="red-team" class="bg-red-300 order-2 mt-20 ml-5 big-score">
         <div class="select-wrapper relative hover:after:block">
           <select
             class="team-name w-full text-size-4xl cursor-pointer overflow-visible children:bg-red-200"
