@@ -3,10 +3,7 @@ import "virtual:windi.css";
 import { startTimer, stopTimer, resetTimer } from "./timer";
 
 const counter_states = {};
-const records = {
-  red: [],
-  blue: [],
-};
+
 const team_names = [
   "Alkali Metal",
   "Now",
@@ -24,6 +21,7 @@ const WINNING_COMB = ["123", "456", "789", "147", "258", "369", "159", "357"];
 const btn_start = document.querySelector("#start");
 const btn_stop = document.querySelector("#stop");
 const btn_reset = document.querySelector("#reset");
+const btn_appeal = document.querySelector("#appeal");
 const btn_save = document.querySelector("#save");
 const btn_load = document.querySelector("#load");
 const btn_final = document.querySelector("#cal-final-score");
@@ -34,13 +32,7 @@ const bases = {
   blue: document.querySelector("#blue-base"),
 };
 const grid = document.querySelector("#grid");
-
-const score_boards = {
-  red: document.querySelector("#red-scoreboard"),
-  blue: document.querySelector("#blue-scoreboard"),
-  redBig: document.querySelector("#red-score"),
-  blueBig: document.querySelector("#blue-score"),
-};
+let win_banner;
 
 selects.forEach((select) => {
   team_names.forEach((name) => {
@@ -108,6 +100,8 @@ grid.addEventListener("mousedown", (e) => {
         red_ids.includes(winComb[2])
       ) {
         line || drawWinningLine(winComb, "red");
+        const winEvent = new CustomEvent("greatVictory", { detail: { team: "red" } });
+        document.dispatchEvent(winEvent);
       } else {
         line?.dataset.color === "red" && grid.removeChild(line);
       }
@@ -117,6 +111,8 @@ grid.addEventListener("mousedown", (e) => {
         blue_ids.includes(winComb[2])
       ) {
         line || drawWinningLine(winComb, "blue");
+        const winEvent = new CustomEvent("greatVictory", { detail: { team: "blue" } });
+        document.dispatchEvent(winEvent);
       } else {
         line?.dataset.color === "blue" && grid.removeChild(line);
       }
@@ -192,8 +188,22 @@ btn_stop.addEventListener("click", () => {
 
 btn_reset.addEventListener("click", () => {
   btn_start.disabled = false;
+  btn_appeal.classList.add("hidden");
   resetTimer();
   resetAll();
+});
+
+btn_appeal.addEventListener("click", () => {
+  resetTimer();
+  btn_start.disabled = true;
+  btn_stop.classList.remove("hidden");
+  btn_reset.classList.add("hidden");
+
+  startTimer(30 * 1000);
+});
+
+document.addEventListener("timerEnded", (e) => {
+  btn_appeal.classList.remove("hidden");
 });
 
 function resetAll() {
@@ -213,6 +223,7 @@ function resetAll() {
   });
 
   grid.querySelectorAll("div").forEach((line) => grid.removeChild(line));
+  win_banner?.remove();
 
   // score_boards.red.innerHTML = "";
   // score_boards.blue.innerHTML = "";
@@ -250,20 +261,19 @@ function resetAll() {
 //   document.querySelector(".drop-area").classList.toggle("hidden");
 // });
 
-// document.addEventListener("greatVictory", (e) => {
-//   if (!gv) {
-//     stopTimer();
-//     btn_stop.click();
+document.addEventListener("greatVictory", (e) => {
+  if (win_banner) return;
+  stopTimer();
+  btn_stop.click();
 
-//     const div = document.createElement("div");
-//     div.classList.add("great-victory");
-//     const h1 = document.createElement("h1");
-//     h1.innerText = "Great Victory";
-//     h1.classList.add("text-size-3xl", "font-bold");
-//     div.appendChild(h1);
+  const div = document.createElement("div");
+  div.classList.add("great-victory");
+  const h1 = document.createElement("h1");
+  h1.innerText = "Great Victory";
+  h1.classList.add("text-size-3xl", "font-bold");
+  div.appendChild(h1);
 
-//     const board = score_boards[e.detail.team + "Big"];
-//     board.parentNode.insertBefore(div, board.nextSibling);
-//     gv = div;
-//   }
-// });
+  const team_scoreboard = document.querySelector(`#${e.detail.team}-team`);
+  team_scoreboard.appendChild(div);
+  win_banner = div;
+});
