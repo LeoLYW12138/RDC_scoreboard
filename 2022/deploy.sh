@@ -7,8 +7,12 @@ npm run build
 
 cp -r ./dist/** ../gh-page/
 
+cd ../gh-page
+
 git add -A
 
 git commit -m "deploy"
 
-git push --recurse-submodules=only
+git push origin main:main
+
+cd -
