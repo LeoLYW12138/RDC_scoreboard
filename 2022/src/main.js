@@ -121,7 +121,7 @@ grid.addEventListener("mousedown", (e) => {
         line?.dataset.color === "blue" && grid.removeChild(line);
       }
     });
-  }, 100);
+  }, 200);
 });
 
 function drawWinningLine(comb, color) {
