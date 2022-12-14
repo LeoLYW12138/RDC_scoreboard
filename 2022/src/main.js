@@ -3,10 +3,7 @@ import "virtual:windi.css";
 import { startTimer, stopTimer, resetTimer } from "./timer";
 
 const counter_states = {};
-const records = {
-  red: [],
-  blue: [],
-};
+
 const team_names = [
   "Alkali Metal",
   "Now",
@@ -35,6 +32,7 @@ const bases = {
   blue: document.querySelector("#blue-base"),
 };
 const grid = document.querySelector("#grid");
+let win_banner;
 
 selects.forEach((select) => {
   team_names.forEach((name) => {
@@ -225,7 +223,7 @@ function resetAll() {
   });
 
   grid.querySelectorAll("div").forEach((line) => grid.removeChild(line));
-  document.querySelectorAll(".great-victory").forEach((div) => div.remove());
+  win_banner?.remove();
 
   // score_boards.red.innerHTML = "";
   // score_boards.blue.innerHTML = "";
@@ -264,6 +262,7 @@ function resetAll() {
 // });
 
 document.addEventListener("greatVictory", (e) => {
+  if (win_banner) return;
   stopTimer();
   btn_stop.click();
 
@@ -276,4 +275,5 @@ document.addEventListener("greatVictory", (e) => {
 
   const team_scoreboard = document.querySelector(`#${e.detail.team}-team`);
   team_scoreboard.appendChild(div);
+  win_banner = div;
 });
