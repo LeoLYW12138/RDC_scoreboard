@@ -5,15 +5,14 @@ import { startTimer, stopTimer, resetTimer } from "./timer";
 const counter_states = {};
 
 const team_names = [
-  "Alkali Metal",
-  "Now",
-  "Delta Three-ta",
-  "4gotton",
-  "Team Fire",
-  "Cancer",
-  "Group 7",
-  "Infinity",
-  "Cloud9",
+  { en: "Alpha", chi: "一剔過" },
+  { en: "Too easy", chi: "太難" },
+  { en: "Triumphus", chi: "凱昇" },
+  { en: "Stonks", chi: "重在參與組" },
+  { en: "Fibotics", chi: "得5得" },
+  { en: "Sixy Guys", chi: "碌柚" },
+  { en: "24/7" },
+  { en: "Fleming", chi: "弗莱明" },
 ];
 
 const WINNING_COMB = ["123", "456", "789", "147", "258", "369", "159", "357"];
@@ -35,11 +34,16 @@ const grid = document.querySelector("#grid");
 let win_banner;
 
 selects.forEach((select) => {
-  team_names.forEach((name) => {
+  team_names.forEach(({ en, chi }) => {
     const option = document.createElement("option");
-    option.value = name;
-    option.text = name;
+    option.value = en;
+    option.text = en;
     select.appendChild(option);
+  });
+  select.addEventListener("change", (e) => {
+    const label = select.parentElement.querySelector("label");
+    const team_name = team_names.find((team_name) => team_name.en === e.target.value);
+    if (team_name) label.innerText = team_name.chi ?? "";
   });
 });
 
@@ -224,6 +228,7 @@ function resetAll() {
 
   grid.querySelectorAll("div").forEach((line) => grid.removeChild(line));
   win_banner?.remove();
+  win_banner = undefined;
 
   // score_boards.red.innerHTML = "";
   // score_boards.blue.innerHTML = "";

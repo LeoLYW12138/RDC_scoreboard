@@ -99,7 +99,6 @@ function startTimer(_targetTime = ONE_MIN) {
   targetTime = _targetTime;
   timer.start();
   timerId = setInterval(updateTimer, 8);
-  console.log("start timer, ", targetTime);
 }
 
 function stopTimer() {
@@ -117,7 +116,6 @@ function updateTimer() {
     countdownAudio.play();
   }
   if (targetTime === THREE_MIN && time >= THREE_MIN) {
-    console.log("ho", time);
     longBeepAudio.play();
     stopTimer();
     btn_stop.click();
@@ -135,14 +133,11 @@ function updateTimer() {
 
     return;
   } else if (targetTime == ONE_MIN && time >= ONE_MIN) {
-    console.log("hey");
     countdownPlayed = false;
     beepAudio.play();
     stopTimer();
     timer.reset();
-    targetTime = THREE_MIN;
-    timer.start();
-    timerId = setInterval(updateTimer, 8);
+    startTimer(THREE_MIN);
   } else if (targetTime === HALF_MIN && time >= HALF_MIN) {
     longBeepAudio.play();
     stopTimer();
