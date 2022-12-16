@@ -82,20 +82,26 @@
             <img src="./assets/RDC_gamefield_2022.png" alt="gamefield" />
             <div
               id="grid"
-              class="grid grid-cols-3 grid-rows-3 w-[13.5%] h-[14%] top-[50.5%] left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2 text-sm lg:text-base"
+              class="z-10 grid grid-cols-3 grid-rows-3 w-[13.5%] h-[14%] top-[50.5%] left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2 text-sm lg:text-base"
             >
-              <button id="1" class="bg-[#545454] text-white hover:bg-opacity-80">1</button>
-              <button id="2" class="bg-[#545454] text-white hover:bg-opacity-80">2</button>
-              <button id="3" class="bg-[#545454] text-white hover:bg-opacity-80">3</button>
-              <button id="4" class="bg-[#545454] text-white hover:bg-opacity-80">4</button>
-              <button id="5" class="bg-[#545454] text-white hover:bg-opacity-80">5</button>
-              <button id="6" class="bg-[#545454] text-white hover:bg-opacity-80">6</button>
-              <button id="7" class="bg-[#545454] text-white hover:bg-opacity-80">7</button>
-              <button id="8" class="bg-[#545454] text-white hover:bg-opacity-80">8</button>
-              <button id="9" class="bg-[#545454] text-white hover:bg-opacity-80">9</button>
+              <button id="1" class="bg-[#545454] text-white hover:bg-opacity-80 relative">1</button>
+              <button id="2" class="bg-[#545454] text-white hover:bg-opacity-80 relative">2</button>
+              <button id="3" class="bg-[#545454] text-white hover:bg-opacity-80 relative">3</button>
+              <button id="4" class="bg-[#545454] text-white hover:bg-opacity-80 relative">4</button>
+              <button id="5" class="bg-[#545454] text-white hover:bg-opacity-80 relative">5</button>
+              <button id="6" class="bg-[#545454] text-white hover:bg-opacity-80 relative">6</button>
+              <button id="7" class="bg-[#545454] text-white hover:bg-opacity-80 relative">7</button>
+              <button id="8" class="bg-[#545454] text-white hover:bg-opacity-80 relative">8</button>
+              <button id="9" class="bg-[#545454] text-white hover:bg-opacity-80 relative">9</button>
               <!-- <div
                 class="bg-[#FFDF00BC] pointer-events-none rounded-full h-[5%] w-[80%] absolute top-1/2 left-0 rotate-90 transform -translate-x-1/2 -translate-y-1/2"
               ></div> -->
+              <!-- <div
+                  class="absolute z-10 flex gap-1 bottom-[90%] left-1/2 -translate-x-1/2 transform bg-gray-400 p-1"
+                >
+                  <span class="block p-1 bg-red-500 cursor-pointer hover:bg-red-700">Red</span>
+                  <span class="block p-1 bg-blue-500 cursor-pointer hover:bg-blue-700">Blue</span>
+                </div> -->
             </div>
             <button
               id="red-base"
