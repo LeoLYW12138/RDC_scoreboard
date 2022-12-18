@@ -73,55 +73,102 @@ Object.values(bases).forEach((base) => {
   });
 });
 
+const cellSelectMenu = (cellElement, onClick) => {
+  const menu = document.createElement("div");
+  const redOption = document.createElement("span");
+  const blueOption = document.createElement("span");
+
+  menu.className =
+    "grid-select-menu absolute z-10 flex gap-1 bottom-[90%] left-1/2 -translate-x-1/2 transform bg-gray-400 p-1";
+  redOption.className = "block p-1 bg-red-500 cursor-pointer hover:bg-red-700";
+  blueOption.className = "block p-1 bg-blue-500 cursor-pointer hover:bg-blue-700";
+
+  redOption.innerText = "Red";
+  blueOption.innerText = "Blue";
+
+  redOption.addEventListener("click", () => {
+    cellElement.classList.remove("bg-[#545454]", "bg-blue-700");
+    cellElement.classList.add("bg-red-700");
+    cellElement.dataset.color = "red";
+    onClick(menu);
+  });
+
+  blueOption.addEventListener("click", () => {
+    cellElement.classList.remove("bg-[#545454]", "bg-red-700");
+    cellElement.classList.add("bg-blue-700");
+    cellElement.dataset.color = "blue";
+    onClick(menu);
+  });
+
+  menu.appendChild(redOption);
+  menu.appendChild(blueOption);
+
+  return menu;
+};
+
 Array.from(grid.children).forEach((child) => {
+  const notifyClicked = (menu) => {
+    const event = new CustomEvent("cellClicked");
+    document.dispatchEvent(event);
+    document.querySelectorAll(".grid-select-menu").forEach((el) => el.remove());
+    menu?.remove();
+  };
+
   child.addEventListener("click", (e) => {
-    e.target.classList.remove("bg-[#545454]", "bg-blue-700");
-    e.target.classList.add("bg-red-700");
-    e.target.dataset.color = "red";
+    if (child.querySelector(".grid-select-menu")) return;
+    const menu = cellSelectMenu(child, notifyClicked);
+    child.appendChild(menu);
+    // e.target.classList.remove("bg-[#545454]", "bg-blue-700");
+    // e.target.classList.add("bg-red-700");
+    // e.target.dataset.color = "red";
+    // notifyClicked();
   });
   child.addEventListener("contextmenu", (e) => {
     e.preventDefault();
-    e.target.classList.remove("bg-[#545454]", "bg-red-700");
-    e.target.classList.add("bg-blue-700");
-    e.target.dataset.color = "blue";
+    // e.target.classList.remove("bg-[#545454]", "bg-red-700");
+    // e.target.classList.add("bg-blue-700");
+    // e.target.dataset.color = "blue";
+
+    e.target.classList.remove("bg-red-700", "bg-blue-700");
+    delete e.target.dataset.color;
+
+    notifyClicked();
   });
 });
 
-grid.addEventListener("mousedown", (e) => {
-  setTimeout(() => {
-    const cells = Array.from(grid.children).filter((el) => el.dataset.color);
-    const reds = cells.filter((cell) => cell.dataset.color === "red");
-    const blues = cells.filter((cell) => cell.dataset.color === "blue");
+document.addEventListener("cellClicked", (e) => {
+  const cells = Array.from(grid.children).filter((el) => el.dataset.color);
+  const reds = cells.filter((cell) => cell.dataset.color === "red");
+  const blues = cells.filter((cell) => cell.dataset.color === "blue");
 
-    const red_ids = reds.map((red) => red.id);
-    const blue_ids = blues.map((blue) => blue.id);
+  const red_ids = reds.map((red) => red.id);
+  const blue_ids = blues.map((blue) => blue.id);
 
-    WINNING_COMB.forEach((winComb) => {
-      const line = grid.querySelector(`[data-comb='${winComb}']`);
-      if (
-        red_ids.includes(winComb[0]) &&
-        red_ids.includes(winComb[1]) &&
-        red_ids.includes(winComb[2])
-      ) {
-        line || drawWinningLine(winComb, "red");
-        const winEvent = new CustomEvent("greatVictory", { detail: { team: "red" } });
-        document.dispatchEvent(winEvent);
-      } else {
-        line?.dataset.color === "red" && grid.removeChild(line);
-      }
-      if (
-        blue_ids.includes(winComb[0]) &&
-        blue_ids.includes(winComb[1]) &&
-        blue_ids.includes(winComb[2])
-      ) {
-        line || drawWinningLine(winComb, "blue");
-        const winEvent = new CustomEvent("greatVictory", { detail: { team: "blue" } });
-        document.dispatchEvent(winEvent);
-      } else {
-        line?.dataset.color === "blue" && grid.removeChild(line);
-      }
-    });
-  }, 200);
+  WINNING_COMB.forEach((winComb) => {
+    const line = grid.querySelector(`[data-comb='${winComb}']`);
+    if (
+      red_ids.includes(winComb[0]) &&
+      red_ids.includes(winComb[1]) &&
+      red_ids.includes(winComb[2])
+    ) {
+      line || drawWinningLine(winComb, "red");
+      const winEvent = new CustomEvent("greatVictory", { detail: { team: "red" } });
+      document.dispatchEvent(winEvent);
+    } else {
+      line?.dataset.color === "red" && grid.removeChild(line);
+    }
+    if (
+      blue_ids.includes(winComb[0]) &&
+      blue_ids.includes(winComb[1]) &&
+      blue_ids.includes(winComb[2])
+    ) {
+      line || drawWinningLine(winComb, "blue");
+      const winEvent = new CustomEvent("greatVictory", { detail: { team: "blue" } });
+      document.dispatchEvent(winEvent);
+    } else {
+      line?.dataset.color === "blue" && grid.removeChild(line);
+    }
+  });
 });
 
 function drawWinningLine(comb, color) {
@@ -150,10 +197,10 @@ function drawWinningLine(comb, color) {
       line.classList.add("w-[80%]", "top-1/2", "left-5/6", "rotate-90");
       break;
     case "159":
-      line.classList.add("w-[90%]", "top-1/2", "left-1/2", "rotate-45");
+      line.classList.add("w-full", "top-1/2", "left-1/2", "rotate-45");
       break;
     case "357":
-      line.classList.add("w-[90%]", "top-1/2", "left-1/2", "-rotate-45");
+      line.classList.add("w-full", "top-1/2", "left-1/2", "-rotate-45");
       break;
     default:
   }
@@ -229,11 +276,6 @@ function resetAll() {
   grid.querySelectorAll("div").forEach((line) => grid.removeChild(line));
   win_banner?.remove();
   win_banner = undefined;
-
-  // score_boards.red.innerHTML = "";
-  // score_boards.blue.innerHTML = "";
-  // score_boards.redBig.innerText = "0";
-  // score_boards.blueBig.innerText = "0";
 }
 
 // btn_save.addEventListener("click", () => {
