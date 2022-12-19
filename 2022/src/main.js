@@ -86,18 +86,20 @@ const cellSelectMenu = (cellElement, onClick) => {
   redOption.innerText = "Red";
   blueOption.innerText = "Blue";
 
-  redOption.addEventListener("click", () => {
+  redOption.addEventListener("click", (e) => {
+    e.stopPropagation();
     cellElement.classList.remove("bg-[#545454]", "bg-blue-700");
     cellElement.classList.add("bg-red-700");
     cellElement.dataset.color = "red";
-    onClick(menu);
+    onClick();
   });
 
-  blueOption.addEventListener("click", () => {
+  blueOption.addEventListener("click", (e) => {
+    e.stopPropagation();
     cellElement.classList.remove("bg-[#545454]", "bg-red-700");
     cellElement.classList.add("bg-blue-700");
     cellElement.dataset.color = "blue";
-    onClick(menu);
+    onClick();
   });
 
   menu.appendChild(redOption);
@@ -107,15 +109,16 @@ const cellSelectMenu = (cellElement, onClick) => {
 };
 
 Array.from(grid.children).forEach((child) => {
-  const notifyClicked = (menu) => {
+  const notifyClicked = () => {
     const event = new CustomEvent("cellClicked");
     document.dispatchEvent(event);
     document.querySelectorAll(".grid-select-menu").forEach((el) => el.remove());
-    menu?.remove();
   };
 
   child.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
     if (child.querySelector(".grid-select-menu")) return;
+    document.querySelectorAll(".grid-select-menu").forEach((el) => el.remove());
     const menu = cellSelectMenu(child, notifyClicked);
     child.appendChild(menu);
     // e.target.classList.remove("bg-[#545454]", "bg-blue-700");
@@ -130,10 +133,18 @@ Array.from(grid.children).forEach((child) => {
     // e.target.dataset.color = "blue";
 
     e.target.classList.remove("bg-red-700", "bg-blue-700");
+    e.target.classList.add("bg-[#545454]");
     delete e.target.dataset.color;
 
     notifyClicked();
   });
+});
+
+document.addEventListener("mousedown", (e) => {
+  // not clicking anything inside the grid
+  if (grid.contains(e.target)) return;
+
+  document.querySelectorAll(".grid-select-menu").forEach((el) => el.remove());
 });
 
 document.addEventListener("cellClicked", (e) => {
