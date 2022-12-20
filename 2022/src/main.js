@@ -323,6 +323,7 @@ document.addEventListener("greatVictory", (e) => {
   if (win_banner) return;
   stopTimer();
   btn_stop.click();
+  btn_appeal.classList.remove("hidden");
 
   const div = document.createElement("div");
   div.classList.add("great-victory");
