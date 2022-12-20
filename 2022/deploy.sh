@@ -16,3 +16,9 @@ git commit -m "deploy"
 git push origin main:main
 
 cd -
+
+git add gh-page
+
+git commit -m "deploy at $(date)"
+
+git push origin master
